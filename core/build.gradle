@@ -1,0 +1,17 @@
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets {
+    main {
+        java.srcDir("src/main/java")
+    }
+    test {
+        java.srcDir("src/test/java")
+        resources.srcDir("../assets")
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+eclipse.project.name = appName + "-core"
