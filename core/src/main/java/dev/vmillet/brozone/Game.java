@@ -4,25 +4,17 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import dev.vmillet.brozone.factory.GdxGameFactory;
 
 public class Game extends ApplicationAdapter {
-
-	private final GdxGameFactory factory;
-
-	SpriteBatch batch;
-	Texture img;
-
-	public Game(GdxGameFactory factory) {
-		this.factory = factory;
-	}
+	private SpriteBatch batch;
+	private Texture img;
 
 	/**
 	 * Method called once when the application is created.
 	 */
 	@Override
 	public void create () {
-		batch = factory.getSpriteBatch();
+		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 	}
 

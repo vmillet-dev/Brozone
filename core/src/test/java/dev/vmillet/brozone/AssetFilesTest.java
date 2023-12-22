@@ -5,7 +5,7 @@ import dev.vmillet.brozone.utilsTest.GdxTestRunner;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(GdxTestRunner.class)
 class AssetFilesTest {
@@ -13,6 +13,6 @@ class AssetFilesTest {
 
     @Test
     void defaultLogo() {
-        assertTrue(Gdx.files.internal(assetPath + "badlogic.jpg").exists());
+        assertThat(Gdx.files.internal(assetPath + "badlogic.jpg").exists()).isTrue();
     }
 }
