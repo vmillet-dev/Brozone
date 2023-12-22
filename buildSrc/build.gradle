@@ -1,0 +1,22 @@
+plugins {
+    id("java-library")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of("11"))
+    }
+}
+
+repositories {
+    mavenCentral()
+    google()
+    maven { url "https://artifactory.nimblygames.com/artifactory/ng-public" }
+}
+
+dependencies {
+    implementation("com.badlogicgames.packr:packr:4.1.0-SNAPSHOT")
+
+    implementation(gradleApi())
+    implementation(localGroovy())
+}
