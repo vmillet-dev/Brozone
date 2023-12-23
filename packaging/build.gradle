@@ -94,7 +94,7 @@ def configurePackageTask(platform, ICON_PATH) {
 }
 
 PackrConfig.Platform.values().each { platform ->
-    def platformName = platform.toString();
+    def platformName = platform.toString()
 
     configurePackageTask(platform, ICON_PATH)
 
