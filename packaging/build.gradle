@@ -1,0 +1,117 @@
+import com.badlogicgames.packr.Packr
+import com.badlogicgames.packr.PackrConfig
+
+def ICON_PATH = new File("$rootDir/assets/badlogic.jpg")
+
+def configurePackageTask(platform, ICON_PATH) {
+    tasks.register("package${platform.toString()}") {
+        dependsOn(":desktop:dist")
+
+        doLast {
+            copy {
+                into "build/"
+                rename("${appName}.jar", "desktop.jar")
+                from "build/libs/${appName}.jar"
+            }
+
+            delete {
+                delete "build/output/"
+            }
+
+            def config = new PackrConfig()
+
+            config.with {
+                config.executable = appName
+                config.platform = platform
+                verbose = true
+                bundleIdentifier = getPackage() + ".mac"
+                iconResource = ICON_PATH
+                outDir = file("build/output")
+                mainClass = project(":desktop").ext.mainClassName
+                classpath = [ project(":desktop").projectDir.path + "/build/libs/desktop-1.0.jar" ]
+                removePlatformLibs = config.classpath
+
+                vmArgs = []
+                minimizeJre = "$rootDir/packaging/packr_minimize.json".toString()
+
+                switch (platform) {
+                    case PackrConfig.Platform.Windows64:
+                        jdk = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip"
+                        break
+                    case PackrConfig.Platform.MacOS:
+                        jdk = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_macos-x64_bin.tar.gz"
+                        break
+                    case PackrConfig.Platform.Linux64:
+                        jdk = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz"
+                        break
+                }
+
+                if (platform == PackrConfig.Platform.MacOS) {
+                    vmArgs += "XstartOnFirstThread"
+                }
+            }
+
+            new Packr().pack(config)
+
+            if (platform != PackrConfig.Platform.MacOS) {
+                copy {
+                    into "build/output/jre/"
+                    from "build/output/desktop.jar"
+                }
+
+                delete {
+                    delete "build/output/desktop.jar"
+                }
+
+                file("build/output/${appName}.json").text = file("build/output/${appName}.json").text.replace("desktop.jar", "jre/desktop.jar")
+            }
+
+            if (platform == PackrConfig.Platform.MacOS) {
+                copy {
+                    into "build/output/${appName}.app/Contents/"
+                    from "build/output/Contents/"
+                }
+
+                delete {
+                    delete "build/output/Contents/"
+                }
+            }
+
+            if ((platform == PackrConfig.Platform.Windows64 || platform == PackrConfig.Platform.Windows32)) {
+                copy {
+                    from "build/output/jre/bin/msvcr100.dll"
+                    into "build/output/"
+                    rename("msvcr100.dll", "MSVCR100.dll")
+                }
+            }
+
+            copy {
+                from "build/output"
+                into "../deploy/${platform.toString()}"
+            }
+        }
+    }
+}
+
+PackrConfig.Platform.values().each { platform ->
+    def platformName = platform.toString();
+
+    configurePackageTask(platform, ICON_PATH)
+
+    tasks.named("package${platformName}") {
+        finalizedBy("zip${platformName}")
+    }
+
+    tasks.register("zip${platformName}", Zip) {
+        dependsOn("package${platformName}")
+        doLast {
+            from "build/output"
+            archiveFileName = "${generateDeployName(platformName)}.zip"
+            destinationDirectory = file(projectDir + "/deploy")
+
+            delete {
+                delete "build/"
+            }
+        }
+    }
+}

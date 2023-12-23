@@ -4,11 +4,13 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://artifactory.nimblygames.com/artifactory/ng-public"}
         google()
     }
     dependencies {
         classpath 'org.docstr:gwt-gradle-plugin:1.1.30'
         classpath 'org.gretty:gretty:3.1.0'
+        classpath 'com.badlogicgames.packr:packr:4.1.0-SNAPSHOT'
     }
 }
 
@@ -18,7 +20,7 @@ plugins {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
@@ -28,13 +30,34 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "Brozone"
+        appName = "brozone"
         gdxVersion = '1.12.2-SNAPSHOT'
         roboVMVersion = '2.3.20'
         box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.1'
+
+        getPackage = {
+            return project(":desktop").ext.mainClassName.substring(0, project(":desktop").ext.mainClassName.indexOf("Desktop") - 1)
+        }
+
+        getNeatVersionString = {
+            return "v$version"
+        }
+
+        generateDeployName = { String platform ->
+            if(platform == "windows"){
+                platform += "64"
+            }
+            platform = platform.capitalize()
+
+            if(platform.endsWith("64") || platform.endsWith("32")){
+                platform = "${platform.substring(0, platform.length() - 2)}-${platform.substring(platform.length() - 2)}bit"
+            }
+
+            return "[${platform}][${getNeatVersionString()}]${appName}"
+        }
     }
 
     repositories {
