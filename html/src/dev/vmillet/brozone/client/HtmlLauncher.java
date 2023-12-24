@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import dev.vmillet.brozone.Game;
-import dev.vmillet.brozone.factory.GdxGameFactory;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -18,7 +17,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                GdxGameFactory factory = new GdxGameFactory();
-                return new Game(factory);
+                return new Game();
         }
 }
