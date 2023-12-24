@@ -15,10 +15,13 @@ String getUrlByPlatform(PackrConfig.Platform platform) {
 
 tasks.register('releaseAllPlatform') {
     PackrConfig.Platform.values().each { platform ->
+        if (platform == PackrConfig.Platform.Linux64) {
+            return
+        }
         dependsOn "zip${platform.toString()}"
     }
-    dependsOn(":html:war")
 
+    dependsOn(":html:war")
     copy {
         from (project(":html").projectDir.path + "/build/libs")
         into "release/"
@@ -144,6 +147,6 @@ def copyOutputFiles(platform) {
     copy {
         from "build/output"
         into "deploy/${platform.toString().toLowerCase()}"
-        fileMode 644
+        fileMode 755
     }
 }
