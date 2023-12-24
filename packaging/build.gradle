@@ -21,11 +21,22 @@ tasks.register('releaseAllPlatform') {
         dependsOn "zip${platform.toString()}"
     }
 
+    dependsOn("releaseHtml")
+}
+
+tasks.register('releaseHtml', Zip) {
     dependsOn(":html:war")
     copy {
         from (project(":html").projectDir.path + "/build/libs")
         into "release/"
     }
+
+    dependsOn(":html:dist")
+
+    from (project(":html").projectDir.path + "/build/dist")
+    include "**/*"
+    archiveFileName = "${getNeatVersionString()}-js.zip"
+    destinationDirectory = file(project.projectDir.path + "/release")
 }
 
 PackrConfig.Platform.values().each { platform ->
