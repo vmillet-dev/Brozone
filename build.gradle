@@ -11,6 +11,7 @@ buildscript {
         classpath 'org.docstr:gwt-gradle-plugin:1.1.30'
         classpath 'org.gretty:gretty:3.1.0'
         classpath 'com.badlogicgames.packr:packr:4.1.0-SNAPSHOT'
+        classpath 'de.undercouch:gradle-download-task:5.5.0'
     }
 }
 
@@ -28,36 +29,37 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "java-library"
 
-    version = '1.0'
+    version = '0.1'
     ext {
-        appName = "brozone"
+        appName = 'brozone'
         gdxVersion = '1.12.2-SNAPSHOT'
         roboVMVersion = '2.3.20'
         box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.1'
+        activeJdkCache = true
 
         getPackage = {
             return project(":desktop").ext.mainClassName.substring(0, project(":desktop").ext.mainClassName.indexOf("Desktop") - 1)
         }
 
         getNeatVersionString = {
-            return "v$version"
+            return "${appName}-v$version"
         }
 
-        generateDeployName = { String platform ->
-            if(platform == "windows"){
-                platform += "64"
-            }
-            platform = platform.capitalize()
+        generateDesktopReleaseName = { String platform ->
 
-            if(platform.endsWith("64") || platform.endsWith("32")){
-                platform = "${platform.substring(0, platform.length() - 2)}-${platform.substring(platform.length() - 2)}bit"
+            if(platform.endsWith("64")){
+                platform = "${platform.substring(0, platform.length() - 2)}"
             }
 
-            return "[${platform}][${getNeatVersionString()}]${appName}"
+            return "${getNeatVersionString()}_${platform.toString().toLowerCase()}"
         }
+
+        urlJdkWindows = 'https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip'
+        urlJdkMacOs = 'https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_macos-x64_bin.tar.gz'
+        urlJdkLinux = 'https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz'
     }
 
     repositories {

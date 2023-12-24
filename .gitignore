@@ -64,9 +64,10 @@ com_crashlytics_export_strings.xml
 /desktop/build/
 /html/build/
 /ios/build/
-/deploy/
 /packaging/cache/
 /packaging/build/
+/packaging/deploy/
+/packaging/release/
 
 /nbbuild/
 /android/nbbuild/

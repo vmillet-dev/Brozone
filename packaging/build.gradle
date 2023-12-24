@@ -1,9 +1,52 @@
 import com.badlogicgames.packr.Packr
 import com.badlogicgames.packr.PackrConfig
 
+apply plugin: "de.undercouch.download"
+
 def ICON_PATH = new File("$rootDir/assets/badlogic.jpg")
 
-def configurePackageTask(platform, ICON_PATH) {
+String getUrlByPlatform(PackrConfig.Platform platform) {
+    switch (platform) {
+        case PackrConfig.Platform.Windows64: return "${urlJdkWindows}"
+        case PackrConfig.Platform.MacOS: return "${urlJdkMacOs}"
+        case PackrConfig.Platform.Linux64: return "${urlJdkLinux}"
+    }
+}
+
+tasks.register('releaseAllPlatform') {
+    PackrConfig.Platform.values().each { platform ->
+        dependsOn "zip${platform.toString()}"
+    }
+    dependsOn(":html:war")
+
+    copy {
+        from (project(":html").projectDir.path + "/build/libs")
+        into "release/"
+    }
+}
+
+PackrConfig.Platform.values().each { platform ->
+    def platformName = platform.toString()
+
+    configurePackageTask(platform, ICON_PATH)
+
+    tasks.named("package${platformName}") {
+        finalizedBy "zip${platformName}"
+    }
+
+    tasks.register("zip${platformName}", Zip) {
+        dependsOn "package${platformName}"
+
+        from "build/output"
+        include "**/*"
+        archiveFileName = "${generateDesktopReleaseName(platformName)}.zip"
+        destinationDirectory = file(project.projectDir.path + "/release")
+
+        delete "build/"
+    }
+}
+
+def configurePackageTask(PackrConfig.Platform platform, ICON_PATH) {
     tasks.register("package${platform.toString()}") {
         dependsOn(":desktop:dist")
 
@@ -28,23 +71,13 @@ def configurePackageTask(platform, ICON_PATH) {
                 iconResource = ICON_PATH
                 outDir = file("build/output")
                 mainClass = project(":desktop").ext.mainClassName
-                classpath = [ project(":desktop").projectDir.path + "/build/libs/desktop-1.0.jar" ]
+                classpath = [ project(":desktop").projectDir.path + "/build/libs/${getNeatVersionString()}.jar" ]
                 removePlatformLibs = config.classpath
+
+                jdk = configureJdk(platform)
 
                 vmArgs = []
                 minimizeJre = "$rootDir/packaging/packr_minimize.json".toString()
-
-                switch (platform) {
-                    case PackrConfig.Platform.Windows64:
-                        jdk = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip"
-                        break
-                    case PackrConfig.Platform.MacOS:
-                        jdk = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_macos-x64_bin.tar.gz"
-                        break
-                    case PackrConfig.Platform.Linux64:
-                        jdk = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz"
-                        break
-                }
 
                 if (platform == PackrConfig.Platform.MacOS) {
                     vmArgs += "XstartOnFirstThread"
@@ -53,65 +86,64 @@ def configurePackageTask(platform, ICON_PATH) {
 
             new Packr().pack(config)
 
-            if (platform != PackrConfig.Platform.MacOS) {
-                copy {
-                    into "build/output/jre/"
-                    from "build/output/desktop.jar"
-                }
-
-                delete {
-                    delete "build/output/desktop.jar"
-                }
-
-                file("build/output/${appName}.json").text = file("build/output/${appName}.json").text.replace("desktop.jar", "jre/desktop.jar")
-            }
-
-            if (platform == PackrConfig.Platform.MacOS) {
-                copy {
-                    into "build/output/${appName}.app/Contents/"
-                    from "build/output/Contents/"
-                }
-
-                delete {
-                    delete "build/output/Contents/"
-                }
-            }
-
-            if ((platform == PackrConfig.Platform.Windows64 || platform == PackrConfig.Platform.Windows32)) {
-                copy {
-                    from "build/output/jre/bin/msvcr100.dll"
-                    into "build/output/"
-                    rename("msvcr100.dll", "MSVCR100.dll")
-                }
-            }
-
-            copy {
-                from "build/output"
-                into "../deploy/${platform.toString()}"
-            }
+            copyOutputFiles(platform)
         }
     }
 }
 
-PackrConfig.Platform.values().each { platform ->
-    def platformName = platform.toString()
-
-    configurePackageTask(platform, ICON_PATH)
-
-    tasks.named("package${platformName}") {
-        finalizedBy("zip${platformName}")
+def configureJdk(PackrConfig.Platform platform) {
+    if (!activeJdkCache) {
+        return getUrlByPlatform(platform)
     }
 
-    tasks.register("zip${platformName}", Zip) {
-        dependsOn("package${platformName}")
-        doLast {
-            from "build/output"
-            archiveFileName = "${generateDeployName(platformName)}.zip"
-            destinationDirectory = file(projectDir + "/deploy")
-
-            delete {
-                delete "build/"
-            }
+    def jdkZip = new File(project.projectDir.path + "/cache/${platform.toString().toLowerCase()}" + "/jdk.zip")
+    if (!jdkZip.exists()) {
+        download.run {
+            src getUrlByPlatform(platform)
+            dest jdkZip
+            overwrite true
         }
+    }
+
+    return jdkZip.getAbsolutePath()
+}
+
+def copyOutputFiles(platform) {
+    if (platform != PackrConfig.Platform.MacOS) {
+        copy {
+            into "build/output/jre/"
+            from "build/output/desktop.jar"
+        }
+
+        delete {
+            delete "build/output/desktop.jar"
+        }
+
+        file("build/output/${appName}.json").text = file("build/output/${appName}.json").text.replace("desktop.jar", "jre/desktop.jar")
+    }
+
+    if (platform == PackrConfig.Platform.MacOS) {
+        copy {
+            into "build/output/${appName}.app/Contents/"
+            from "build/output/Contents/"
+        }
+
+        delete {
+            delete "build/output/Contents/"
+        }
+    }
+
+    if (platform == PackrConfig.Platform.Windows64) {
+        copy {
+            from "build/output/jre/bin/msvcr100.dll"
+            into "build/output/"
+            rename("msvcr100.dll", "MSVCR100.dll")
+        }
+    }
+
+    copy {
+        from "build/output"
+        into "deploy/${platform.toString().toLowerCase()}"
+        fileMode 644
     }
 }
