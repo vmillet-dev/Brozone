@@ -80,6 +80,7 @@ tasks.register('addSource') {
 
 tasks.war {
     webAppDirectory.set(file("webapp"))
+    archiveFileName = "${getNeatVersionString()}.war"
 }
 
 tasks.compileGwt.dependsOn(addSource)

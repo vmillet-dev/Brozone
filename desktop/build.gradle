@@ -1,7 +1,7 @@
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../assets"]
 
-project.ext.mainClassName = "dev.vmillet.game.DesktopLauncher"
+project.ext.mainClassName = "dev.vmillet.brozone.DesktopLauncher"
 project.ext.assetsDir = new File("../assets")
 
 import org.gradle.internal.os.OperatingSystem
@@ -31,6 +31,7 @@ tasks.register('debug', JavaExec) {
 }
 
 tasks.register('dist', Jar) {
+    archiveFileName = "${getNeatVersionString()}.jar"
     duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     manifest {
         attributes 'Main-Class': project.mainClassName
