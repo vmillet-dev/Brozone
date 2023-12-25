@@ -20,11 +20,9 @@ plugins {
     id "java-library"
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
-}
+def JDK_VERSION = 17
+
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(JDK_VERSION))
 
 allprojects {
     apply plugin: "eclipse"
