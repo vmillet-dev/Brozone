@@ -23,13 +23,14 @@ public class GameOptions {
         }
     }
 
-    public ControlType controlType;
+    public ControlType controlType = ControlType.KEYBOARD;
 
-    private String keyLeftName;
-    private String keyRightName;
-    private String keyUpName;
-    private String keyDownName;
-    private String keyShootName;
+    // TODO remove this static init
+    private String keyLeftName = "Q";
+    private String keyRightName = "D";
+    private String keyUpName = "Z";
+    private String keyDownName = "S";
+    private String keyShootName = "Space";
 
     public GameOptions() {}
     public void load() {

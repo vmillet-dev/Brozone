@@ -29,7 +29,7 @@ public class LoadingScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        clear(Color.BLACK);
+        clear(Color.DARK_GRAY);
 
         camera.update();
         application.play();

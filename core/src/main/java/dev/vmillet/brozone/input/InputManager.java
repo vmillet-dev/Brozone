@@ -16,7 +16,7 @@ public class InputManager {
     private final InputPointer flashInputPointer;
 
 
-    InputManager() {
+    public InputManager() {
         Gdx.input.setInputProcessor(new InputHandler(this));
 
         flashInputPointer = new InputPointer();

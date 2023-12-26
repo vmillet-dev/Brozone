@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.vmillet.brozone.input.InputManager;
 import dev.vmillet.brozone.managers.GameManager;
-import jakarta.inject.Inject;
+import dev.vmillet.brozone.ui.screens.MainMenuScreen;
 
 public class Brozone extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
 
-	@Inject
-	protected InputManager inputManager;
+	private InputManager inputManager;
 	private GameManager gameManager;
 	private GameOptions options;
 	private boolean isMobile;
@@ -24,9 +23,11 @@ public class Brozone extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		gameManager = new GameManager(this);
 		options = new GameOptions();
-		inputManager.setScreen(this, gameManager.getScreenContainer().getMainMenuScreen());
+		gameManager = new GameManager(this);
+
+		inputManager = new InputManager();
+		inputManager.setScreen(this, new MainMenuScreen(this));
 	}
 
 	/**
@@ -78,6 +79,7 @@ public class Brozone extends Game {
 	}
 
 	public void play() {
+		gameManager = new GameManager(this);
 		gameManager.startGame();
 	}
 
