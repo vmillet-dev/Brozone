@@ -1,13 +1,21 @@
 package dev.vmillet.brozone;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import dev.vmillet.brozone.input.InputManager;
+import dev.vmillet.brozone.managers.GameManager;
+import jakarta.inject.Inject;
 
-public class Game extends ApplicationAdapter {
-	private SpriteBatch batch;
-	private Texture img;
+public class Brozone extends Game {
+	public SpriteBatch batch;
+	public BitmapFont font;
+
+	@Inject
+	protected InputManager inputManager;
+	private GameManager gameManager;
+	private GameOptions options;
+	private boolean isMobile;
 
 	/**
 	 * Method called once when the application is created.
@@ -15,7 +23,10 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		font = new BitmapFont();
+		gameManager = new GameManager(this);
+		options = new GameOptions();
+		inputManager.setScreen(this, gameManager.getScreenContainer().getMainMenuScreen());
 	}
 
 	/**
@@ -24,10 +35,7 @@ public class Game extends ApplicationAdapter {
 	 */
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
 	}
 
 	/**
@@ -66,6 +74,21 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		font.dispose();
+	}
+
+	public void play() {
+		gameManager.startGame();
+	}
+
+	public InputManager getInputManager() {
+		return inputManager;
+	}
+	public GameManager getGameManager() {
+		return gameManager;
+	}
+	public GameOptions getOptions() { return options; }
+	public boolean isMobile() {
+		return isMobile;
 	}
 }
