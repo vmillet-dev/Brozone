@@ -1,29 +1,24 @@
 package dev.vmillet.brozone.ui.screens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
+import dev.vmillet.brozone.GdxLogger;
+import dev.vmillet.brozone.GdxLoggerFactory;
 import dev.vmillet.brozone.controls.ControllerControl;
 import dev.vmillet.brozone.controls.HeroControl;
 import dev.vmillet.brozone.controls.KeyboardControl;
 import dev.vmillet.brozone.ui.BaseScreen;
 
 public class GameScreen extends BaseScreen {
-    final Brozone application;
-    private final Viewport viewport;
-    private final OrthographicCamera camera;
+    private static final GdxLogger logger = GdxLoggerFactory.getLogger(GameScreen.class);
 
     private HeroControl heroControl;
 
     public GameScreen(final Brozone application) {
-        this.application = application;
-
-        camera = new OrthographicCamera();
-        viewport = new ExtendViewport(800, 480, camera);
+        super(application);
+        logger.debug("creating game screen");
 
         GameOptions options = application.getOptions();
 

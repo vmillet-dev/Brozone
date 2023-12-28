@@ -2,6 +2,8 @@ package dev.vmillet.brozone.controls;
 
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
+import dev.vmillet.brozone.GdxLogger;
+import dev.vmillet.brozone.GdxLoggerFactory;
 import dev.vmillet.brozone.game.Hero;
 import dev.vmillet.brozone.managers.GameManager;
 import dev.vmillet.brozone.ui.UiControl;
@@ -9,6 +11,7 @@ import dev.vmillet.brozone.ui.UiControl;
 import java.util.List;
 
 public class KeyboardControl implements HeroControl {
+    private static final GdxLogger logger = GdxLoggerFactory.getLogger(KeyboardControl.class);
 
     public final UiControl leftControl;
     public final UiControl rightControl;
@@ -17,13 +20,15 @@ public class KeyboardControl implements HeroControl {
     public final UiControl shootControl;
 
     public KeyboardControl(Brozone application, List<UiControl> controls) {
+        logger.debug("create keyboard control");
+
         GameOptions gameOptions = application.getOptions();
 
-        leftControl = new UiControl(gameOptions.getKeyLeft());
-        rightControl = new UiControl(gameOptions.getKeyRight());
-        upControl = new UiControl(gameOptions.getKeyUp());
-        downControl = new UiControl(gameOptions.getKeyDown());
-        shootControl = new UiControl(gameOptions.getKeyShoot());
+        leftControl = new UiControl(null, false, gameOptions.getKeyLeft());
+        rightControl = new UiControl(null, false, gameOptions.getKeyRight());
+        upControl = new UiControl(null, false, gameOptions.getKeyUp());
+        downControl = new UiControl(null, false, gameOptions.getKeyDown());
+        shootControl = new UiControl(null, false, gameOptions.getKeyShoot());
 
         controls.add(leftControl);
         controls.add(rightControl);
@@ -42,27 +47,27 @@ public class KeyboardControl implements HeroControl {
 
     @Override
     public boolean isLeft() {
-        return false;
+        return leftControl.isOn();
     }
 
     @Override
     public boolean isRight() {
-        return false;
+        return rightControl.isOn();
     }
 
     @Override
     public boolean isUp() {
-        return false;
+        return upControl.isOn();
     }
 
     @Override
     public boolean isDown() {
-        return false;
+        return downControl.isOn();
     }
 
     @Override
     public boolean isShoot() {
-        return false;
+        return shootControl.isOn();
     }
 
     @Override

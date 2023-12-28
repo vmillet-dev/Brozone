@@ -1,26 +1,22 @@
 package dev.vmillet.brozone.ui.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.vmillet.brozone.Brozone;
+import dev.vmillet.brozone.GdxLogger;
+import dev.vmillet.brozone.GdxLoggerFactory;
+import dev.vmillet.brozone.input.InputManager;
 import dev.vmillet.brozone.ui.BaseScreen;
 
 /**
  * Screen class that handle main menu.
  */
 public class MainMenuScreen extends BaseScreen {
-    final Brozone application;
-    private final Viewport viewport;
-    private final OrthographicCamera camera;
+    private static final GdxLogger logger = GdxLoggerFactory.getLogger(MainMenuScreen.class);
 
     public MainMenuScreen(final Brozone application) {
-        this.application = application;
-
-        camera = new OrthographicCamera();
-        viewport = new ExtendViewport(800, 480, camera);
+        super(application);
+        logger.debug("creating MainMenu screen");
     }
     @Override
     public void show() {
@@ -40,7 +36,8 @@ public class MainMenuScreen extends BaseScreen {
         application.batch.end();
 
         if (Gdx.input.isTouched()) {
-            application.setScreen(application.getGameManager().getScreenContainer().getLoadingScreen());
+            InputManager inputManager = application.getInputManager();
+            inputManager.setScreen(application.getGameManager().getScreens().getLoadingScreen());
             dispose();
         }
     }

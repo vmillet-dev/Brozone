@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.vmillet.brozone.input.InputManager;
 import dev.vmillet.brozone.managers.GameManager;
-import dev.vmillet.brozone.ui.screens.MainMenuScreen;
+
+import static dev.vmillet.brozone.GdxLogger.setDebugLevelMode;
 
 public class Brozone extends Game {
+	private static final GdxLogger logger = GdxLoggerFactory.getLogger(Brozone.class);
+
 	public SpriteBatch batch;
 	public BitmapFont font;
 
@@ -21,13 +24,17 @@ public class Brozone extends Game {
 	 */
 	@Override
 	public void create () {
+		setDebugLevelMode();
+
+		logger.debug("Creating application");
+
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		options = new GameOptions();
 		gameManager = new GameManager(this);
 
 		inputManager = new InputManager();
-		inputManager.setScreen(this, new MainMenuScreen(this));
+		inputManager.setScreen(gameManager.getScreens().getMainMenuScreen());
 	}
 
 	/**
@@ -37,6 +44,9 @@ public class Brozone extends Game {
 	@Override
 	public void render () {
 		super.render();
+		inputManager.update(this);
+		gameManager.update();
+		// TODO maybe must add a drawing manager to draw once time
 	}
 
 	/**
@@ -79,7 +89,7 @@ public class Brozone extends Game {
 	}
 
 	public void play() {
-		gameManager = new GameManager(this);
+		logger.debug("Calling GameManager to start a game");
 		gameManager.startGame();
 	}
 
