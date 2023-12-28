@@ -3,6 +3,9 @@ package dev.vmillet.brozone;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 
+/**
+ * Custom logger based on libgdx app but with a specific string format and colors
+ */
 public final class GdxLogger {
     private final String className;
 

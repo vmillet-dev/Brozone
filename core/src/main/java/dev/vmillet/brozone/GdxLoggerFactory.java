@@ -1,7 +1,10 @@
 package dev.vmillet.brozone;
 
-import com.badlogic.gdx.Gdx;
-
+/**
+ * A logger factory building a static custom logger with formatted class name
+ * following a pattern that keep only the first letter of the package path followed
+ * by a standard path of the logged class
+ */
 public final class GdxLoggerFactory {
     private GdxLoggerFactory() {}
 

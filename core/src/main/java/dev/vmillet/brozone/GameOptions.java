@@ -4,7 +4,8 @@ package dev.vmillet.brozone;
 import com.badlogic.gdx.Input;
 
 /**
- * Manage game config for the whole app, everything in the setting menu must be here
+ * Centralize all config needed by the app such as key binding, display settings, audio settings
+ * and everything that could be modified by the user. Must be de/serialized from/in a file
  */
 public class GameOptions {
 
@@ -25,7 +26,8 @@ public class GameOptions {
 
     public ControlType controlType = ControlType.KEYBOARD;
 
-    // TODO remove this static init
+    // TODO handle AZERTY / QWERTY keyboard
+    // TODO remove this hardcoded init
     private String keyLeftName = "Q";
     private String keyRightName = "D";
     private String keyUpName = "Z";

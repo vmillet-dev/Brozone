@@ -5,6 +5,9 @@ import dev.vmillet.brozone.GdxLoggerFactory;
 import dev.vmillet.brozone.input.inputactor.Input;
 import dev.vmillet.brozone.managers.GameManager;
 
+/**
+ *
+ */
 public class Hero implements GameObject {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(Hero.class);
 
@@ -14,6 +17,7 @@ public class Hero implements GameObject {
         this.input = input;
     }
     // TODO add properties like life, xp, guns
+    // TODO Add drawable and handling physics with Box2D plugin
 
     @Override
     public void update(GameManager gameManager) {

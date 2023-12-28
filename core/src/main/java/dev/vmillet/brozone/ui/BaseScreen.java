@@ -9,6 +9,9 @@ import dev.vmillet.brozone.Brozone;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Base class extended by all object that should implement Screen interface
+ */
 public abstract class BaseScreen implements Screen  {
     protected final Brozone application;
     protected final Viewport viewport;

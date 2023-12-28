@@ -7,6 +7,11 @@ import dev.vmillet.brozone.game.GameObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The purpose of this class is to keep a reference of all objects that
+ * must be updated whether about position or about graphic render. It must be done
+ * once for each frame to calculate the state of all entities in the world
+ */
 public class ObjectManager {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(ObjectManager.class);
 

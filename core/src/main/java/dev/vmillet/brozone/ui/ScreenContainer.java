@@ -7,6 +7,9 @@ import dev.vmillet.brozone.ui.screens.GameScreen;
 import dev.vmillet.brozone.ui.screens.LoadingScreen;
 import dev.vmillet.brozone.ui.screens.MainMenuScreen;
 
+/**
+ * Create and add a reference to all screens of the app
+ */
 public class ScreenContainer {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(ScreenContainer.class);
 

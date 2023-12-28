@@ -8,7 +8,8 @@ import dev.vmillet.brozone.game.PlayerCreator;
 import dev.vmillet.brozone.ui.ScreenContainer;
 
 /**
- * A class that contains all managers needed by the game
+ * Handle many managing aspects of one game. For now, the lifecycle of this object
+ * is along the app lifecycle. Maybe must be created and destroyed for each level ?
  *
  */
 public class GameManager {
@@ -39,7 +40,7 @@ public class GameManager {
 
     private void createGame() {
         logger.debug("create game!");
-        hero = new PlayerCreator().createPLayer(this);
+        hero = new PlayerCreator().createPlayer(this);
         objectManager.add(hero);
     }
 

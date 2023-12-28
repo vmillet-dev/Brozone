@@ -7,11 +7,12 @@ import dev.vmillet.brozone.input.inputactor.NpcInput;
 import dev.vmillet.brozone.input.inputactor.PlayerInput;
 import dev.vmillet.brozone.managers.GameManager;
 
+/**
+ * Build an actor with specific properties and attach input to get npc or player characters
+ */
 public class PlayerCreator {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(PlayerCreator.class);
-
-
-    public Hero createPLayer(GameManager gameManager){
+    public Hero createPlayer(GameManager gameManager){
         logger.debug("Create player");
         // TODO add spawn position
         Hero hero = configureAndCreateHero(gameManager);

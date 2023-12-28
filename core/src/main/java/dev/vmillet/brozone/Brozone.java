@@ -8,6 +8,9 @@ import dev.vmillet.brozone.managers.GameManager;
 
 import static dev.vmillet.brozone.GdxLogger.setDebugLevelMode;
 
+/**
+ * Main class called by each target application
+ */
 public class Brozone extends Game {
 	private static final GdxLogger logger = GdxLoggerFactory.getLogger(Brozone.class);
 
@@ -46,7 +49,7 @@ public class Brozone extends Game {
 		super.render();
 		inputManager.update(this);
 		gameManager.update();
-		// TODO maybe must add a drawing manager to draw once time
+		// TODO maybe must add a drawing manager to draw all objects only once
 	}
 
 	/**
@@ -90,8 +93,12 @@ public class Brozone extends Game {
 
 	public void play() {
 		logger.debug("Calling GameManager to start a game");
+		// TODO handle new game
 		gameManager.startGame();
 	}
+
+	// TODO handle when game finished
+	public void finishGame() {}
 
 	public InputManager getInputManager() {
 		return inputManager;

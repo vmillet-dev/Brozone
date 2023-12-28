@@ -8,6 +8,11 @@ import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
 import dev.vmillet.brozone.input.InputManager;
 
+/**
+ * Keep and update states of all user interaction on keyboard for a specific key / mouse.
+ * This object is created inside a class implementing the Input interface and stored in
+ * a list beside all other controls.
+ */
 public class UiControl {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(UiControl.class);
 
