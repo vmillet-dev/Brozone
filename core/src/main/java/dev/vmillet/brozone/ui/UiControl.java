@@ -28,7 +28,6 @@ public class UiControl {
     private boolean isAreaFlashed;
     private boolean isAreaJustUnpressed;
     private boolean doesMouseHover;
-    private int warnCount;
 
     private int width;
     private int height;
@@ -107,9 +106,6 @@ public class UiControl {
         if (isWithSound && isJustOff()) {
             inputMan.playClick(cmp);
         }
-        if (warnCount > 0) {
-            warnCount--;
-        }
     }
 
     private void updateKeys(boolean canBePressed) {
@@ -120,7 +116,6 @@ public class UiControl {
         } else {
             isKeyPressed = canBePressed && Gdx.input.isKeyPressed(key);
         }
-//        logger.debug("key updated. Key pressed: " + isKeyPressed);
     }
 
     // TODO maybe rewrite this method to better handle click on area
@@ -204,9 +199,6 @@ public class UiControl {
         return doesMouseHover;
     }
 
-    public void enableWarn() {
-        warnCount = 2;
-    }
 
 //    public void computePosition() {
 //        if (referencePosition == null) {

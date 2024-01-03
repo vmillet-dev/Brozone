@@ -13,7 +13,7 @@ public class Hero implements GameObject {
 
     private final Input input;
 
-    Hero(Input input) {
+    public Hero(Input input) {
         this.input = input;
     }
     // TODO add properties like life, xp, guns
