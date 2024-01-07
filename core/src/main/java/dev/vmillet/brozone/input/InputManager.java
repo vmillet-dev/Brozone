@@ -8,6 +8,7 @@ import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
 import dev.vmillet.brozone.ui.BaseScreen;
 import dev.vmillet.brozone.ui.UiControl;
+import dev.vmillet.brozone.ui.UiControllerControl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,8 @@ public class InputManager {
     private static final int POINTER_COUNT = 4;
 
 
-    List<UiControl> controls = new ArrayList<>();
+    List<UiControl> keyboardControls = new ArrayList<>();
+    List<UiControllerControl> controllerControls = new ArrayList<>();
     private final Vector2 lastTouchDragPosition;
     private final InputPointer flashInputPointer;
     private final InputPointer[] inputPointers;
@@ -41,7 +43,7 @@ public class InputManager {
         updatePointers();
 
         boolean consumed = false;
-        for (UiControl control : controls) {
+        for (UiControl control : keyboardControls) {
             control.update(inputPointers, !consumed, this, application);
             if (control.isOn() || control.isJustOff()) {
                 consumed = true;
@@ -56,14 +58,16 @@ public class InputManager {
     public void setScreen(BaseScreen screen) {
         logger.debug("set screen: " + screen.getClass().getName());
 
-        controls = screen.getControls();
-        logger.debug("number of controls: " + controls.size());
+        keyboardControls = screen.getKeyboardControls();
+        controllerControls = screen.getControllerControls();
+
+        logger.debug("number of controls: " + keyboardControls.size());
 
         screen.getApplication().setScreen(screen);
     }
 
     void maybeFlashPressed(int keyCode) {
-        for (UiControl control : controls) {
+        for (UiControl control : keyboardControls) {
             if(control.maybeFlashPressed(keyCode)) {
                 return;
             }
@@ -73,10 +77,22 @@ public class InputManager {
     void maybeFlashPressed(int x, int y) {
         lastTouchDragPosition.set(x, y);
         setPointerPosition(flashInputPointer, x, y);
-        for (UiControl control : controls) {
+        for (UiControl control : keyboardControls) {
             if (control.maybeFlashPressed(flashInputPointer)) {
                 return;
             }
+        }
+    }
+
+    public void buttonControllerPressed(int buttonId) {
+        for (UiControllerControl control : controllerControls) {
+            control.buttonControllerPressed(buttonId);
+        }
+    }
+
+    public void buttonControllerReleased(int buttonId) {
+        for (UiControllerControl control : controllerControls) {
+            control.buttonControllerReleased(buttonId);
         }
     }
 
@@ -109,6 +125,8 @@ public class InputManager {
             inputPointer.pressed = Gdx.input.isTouched(i);
         }
     }
+
+
 
     public static class InputPointer {
         public float x;

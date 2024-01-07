@@ -24,11 +24,11 @@ public class GameScreen extends BaseScreen {
 
         switch (options.controlType) {
             case CONTROLLER:
-                heroControl = new ControllerControl(application);
+                heroControl = new ControllerControl(application, controllerControls);
                 break;
             case KEYBOARD:
             default:
-                heroControl = new KeyboardControl(application, controls);
+                heroControl = new KeyboardControl(application, keyboardControls);
                 break;
         }
 

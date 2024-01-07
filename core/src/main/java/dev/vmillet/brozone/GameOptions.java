@@ -24,7 +24,9 @@ public class GameOptions {
         }
     }
 
-    public ControlType controlType = ControlType.KEYBOARD;
+    public ControlType controlType = ControlType.CONTROLLER;
+
+    CustomControllerMapping customControllerMapping;
 
     // TODO handle AZERTY / QWERTY keyboard
     // TODO remove this hardcoded init
@@ -34,13 +36,26 @@ public class GameOptions {
     private String keyDownName = "S";
     private String keyShootName = "Space";
 
-    public GameOptions() {}
+    public static final int BUTTON_JUMP = 0;
+    public static final int BUTTON_FIRE = 1;
+    public static final int AXIS_VERTICAL = 2;
+    public static final int AXIS_HORIZONTAL = 3;
+    public static final int BUTTON_START = 4;
+    public static final int BUTTON_CANCEL = 5;
+
+    public GameOptions() {
+        customControllerMapping = new CustomControllerMapping();
+    }
     public void load() {
         // TODO load config saved by the user, maybe serialized ?
     }
 
     public void save() {
         // TODO save config, maybe serialized ?
+    }
+
+    public CustomControllerMapping getCustomControllerMapping() {
+        return customControllerMapping;
     }
 
 

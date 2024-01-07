@@ -17,7 +17,8 @@ public abstract class BaseScreen implements Screen  {
     protected final Viewport viewport;
     protected final OrthographicCamera camera;
 
-    protected List<UiControl> controls = new ArrayList<>();
+    protected List<UiControl> keyboardControls = new ArrayList<>();
+    protected List<UiControllerControl> controllerControls = new ArrayList<>();
 
     protected BaseScreen(Brozone application) {
         this.application = application;
@@ -27,6 +28,7 @@ public abstract class BaseScreen implements Screen  {
     }
 
     public Brozone getApplication() { return application; }
-    public List<UiControl> getControls() { return controls; }
+    public List<UiControl> getKeyboardControls() { return keyboardControls; }
+    public List<UiControllerControl> getControllerControls() { return controllerControls; }
 
 }
