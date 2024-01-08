@@ -52,32 +52,31 @@ public class ControllerActorControl implements ActorControl {
 
     @Override
     public void update(Brozone application, boolean enabled) {
-        GameManager game = application.getGameManager();
-        Actor actor = game.getHero();
+        // to implement
     }
 
     @Override
-    public boolean isLeft() {
+    public boolean isMovingLeft() {
         return leftControl.isOn();
     }
 
     @Override
-    public boolean isRight() {
+    public boolean isMovingRight() {
         return rightControl.isOn() ;
     }
 
     @Override
-    public boolean isUp() {
+    public boolean isJumping() {
         return upControl.isOn();
     }
 
     @Override
-    public boolean isDown() {
+    public boolean isCrouching() {
         return downControl.isOn();
     }
 
     @Override
-    public boolean isShoot() {
+    public boolean isShooting() {
         return shootControl.isOn();
     }
 

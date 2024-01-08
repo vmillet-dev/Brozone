@@ -13,7 +13,7 @@ public class GameOptions {
         KEYBOARD("Keyboard"),
         CONTROLLER("Controller");
 
-        private String humanName; // String used in the options menu.
+        private final String humanName;
 
         ControlType(String humanName) {
             this.humanName = humanName;
@@ -28,12 +28,12 @@ public class GameOptions {
 
     CustomControllerMapping customControllerMapping;
 
-    // TODO handle AZERTY / QWERTY keyboard
-    // TODO remove this hardcoded init
+    // MVP handle AZERTY / QWERTY keyboard
+    // MVP remove this hardcoded init
     private String keyLeftName = "Q";
     private String keyRightName = "D";
-    private String keyUpName = "Z";
-    private String keyDownName = "S";
+    private String keyJumpName = "Z";
+    private String keyCrouchName = "S";
     private String keyShootName = "Space";
 
     public static final int BUTTON_JUMP = 0;
@@ -47,11 +47,11 @@ public class GameOptions {
         customControllerMapping = new CustomControllerMapping();
     }
     public void load() {
-        // TODO load config saved by the user, maybe serialized ?
+        // to implement
     }
 
     public void save() {
-        // TODO save config, maybe serialized ?
+        // to implement
     }
 
     public CustomControllerMapping getCustomControllerMapping() {
@@ -68,11 +68,11 @@ public class GameOptions {
     }
 
     public int getKeyUp() {
-        return Input.Keys.valueOf(keyUpName);
+        return Input.Keys.valueOf(keyJumpName);
     }
 
     public int getKeyDown() {
-        return Input.Keys.valueOf(keyDownName);
+        return Input.Keys.valueOf(keyCrouchName);
     }
 
     public int getKeyShoot() {
@@ -87,12 +87,12 @@ public class GameOptions {
         this.keyRightName = keyRightName;
     }
 
-    public void setKeyUpName(String keyUpName) {
-        this.keyUpName = keyUpName;
+    public void setKeyJumpName(String keyJumpName) {
+        this.keyJumpName = keyJumpName;
     }
 
-    public void setKeyDownName(String keyDownName) {
-        this.keyDownName = keyDownName;
+    public void setKeyCrouchName(String keyCrouchName) {
+        this.keyCrouchName = keyCrouchName;
     }
 
     public void setKeyShootName(String keyShootName) {

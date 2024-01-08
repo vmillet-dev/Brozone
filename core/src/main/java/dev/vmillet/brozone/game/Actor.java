@@ -16,21 +16,21 @@ public class Actor implements GameObject {
     Actor(ActorInput actorInput) {
         this.actorInput = actorInput;
     }
-    // TODO add properties like life, xp, guns
-    // TODO Add drawable and handling physics with Box2D plugin
+    // MVP add properties like life, xp, guns
+    // MVP Add drawable and handling physics with Box2D plugin
 
     @Override
     public void update(GameManager gameManager) {
-        if (actorInput.isLeft()) {
+        if (actorInput.isMovingLeft()) {
             logger.info("player turn left");
         }
-        if (actorInput.isRight()) {
+        if (actorInput.isMovingRight()) {
             logger.info("player turn right");
         }
-        if (actorInput.isUp()) {
+        if (actorInput.isJumping()) {
             logger.info("player jump");
         }
-        if (actorInput.isDown()) {
+        if (actorInput.isCrouching()) {
             logger.info("player crougth");
         }
     }

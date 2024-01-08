@@ -17,9 +17,9 @@ public class GameManager {
 
     private final ObjectManager objectManager;
 
-    // TODO add assets manager
-    // TODO add audio manager
-    // TODO add drawing manager
+    // MVP add assets manager
+    // MVP add audio manager
+    // MVP add drawing manager
 
     private final ScreenContainer screenContainer;
     private Actor actor;

@@ -11,27 +11,27 @@ public class NpcActorInput implements ActorInput {
     }
 
     @Override
-    public boolean isUp() {
+    public boolean isJumping() {
         return false;
     }
 
     @Override
-    public boolean isDown() {
+    public boolean isCrouching() {
         return false;
     }
 
     @Override
-    public boolean isLeft() {
+    public boolean isMovingLeft() {
         return false;
     }
 
     @Override
-    public boolean isRight() {
+    public boolean isMovingRight() {
         return false;
     }
 
     @Override
-    public boolean isShoot() {
+    public boolean isShooting() {
         return false;
     }
 

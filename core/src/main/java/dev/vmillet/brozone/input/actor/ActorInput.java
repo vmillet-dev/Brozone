@@ -10,15 +10,15 @@ import dev.vmillet.brozone.Brozone;
 public interface ActorInput {
     void update(Brozone game);
 
-    boolean isUp();
+    boolean isJumping();
 
-    boolean isDown();
+    boolean isCrouching();
 
-    boolean isLeft();
+    boolean isMovingLeft();
 
-    boolean isRight();
+    boolean isMovingRight();
 
-    boolean isShoot();
+    boolean isShooting();
 
     boolean isPlayer();
 }

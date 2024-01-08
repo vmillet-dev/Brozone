@@ -13,10 +13,10 @@ import java.util.List;
 public class KeyboardActorControl implements ActorControl {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(KeyboardActorControl.class);
 
-    public final UiControl leftControl;
-    public final UiControl rightControl;
-    public final UiControl upControl;
-    public final UiControl downControl;
+    public final UiControl moveLeftControl;
+    public final UiControl moveRightControl;
+    public final UiControl jumpControl;
+    public final UiControl crouchControl;
     public final UiControl shootControl;
 
     public KeyboardActorControl(Brozone application, List<UiControl> controls) {
@@ -24,49 +24,46 @@ public class KeyboardActorControl implements ActorControl {
 
         GameOptions gameOptions = application.getOptions();
 
-        leftControl = new UiControl(null, false, gameOptions.getKeyLeft());
-        rightControl = new UiControl(null, false, gameOptions.getKeyRight());
-        upControl = new UiControl(null, false, gameOptions.getKeyUp());
-        downControl = new UiControl(null, false, gameOptions.getKeyDown());
+        moveLeftControl = new UiControl(null, false, gameOptions.getKeyLeft());
+        moveRightControl = new UiControl(null, false, gameOptions.getKeyRight());
+        jumpControl = new UiControl(null, false, gameOptions.getKeyUp());
+        crouchControl = new UiControl(null, false, gameOptions.getKeyDown());
         shootControl = new UiControl(null, false, gameOptions.getKeyShoot());
 
-        controls.add(leftControl);
-        controls.add(rightControl);
-        controls.add(upControl);
-        controls.add(downControl);
+        controls.add(moveLeftControl);
+        controls.add(moveRightControl);
+        controls.add(jumpControl);
+        controls.add(crouchControl);
         controls.add(shootControl);
     }
 
     @Override
     public void update(Brozone application, boolean enabled) {
-        GameManager game = application.getGameManager();
-        Actor actor = game.getHero();
-
-        boolean showButtons = application.isMobile();
+        // to implement
     }
 
     @Override
-    public boolean isLeft() {
-        return leftControl.isOn();
+    public boolean isMovingLeft() {
+        return moveLeftControl.isOn();
     }
 
     @Override
-    public boolean isRight() {
-        return rightControl.isOn();
+    public boolean isMovingRight() {
+        return moveRightControl.isOn();
     }
 
     @Override
-    public boolean isUp() {
-        return upControl.isOn();
+    public boolean isJumping() {
+        return jumpControl.isOn();
     }
 
     @Override
-    public boolean isDown() {
-        return downControl.isOn();
+    public boolean isCrouching() {
+        return crouchControl.isOn();
     }
 
     @Override
-    public boolean isShoot() {
+    public boolean isShooting() {
         return shootControl.isOn();
     }
 

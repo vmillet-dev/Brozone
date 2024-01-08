@@ -98,15 +98,15 @@ public class InputManager {
     }
 
     public void maybeTouchDragged(int x, int y) {
-        // TODO to implement
+        // MVP to implement
     }
 
     public void playClick(Brozone application) {
-        // TODO to implement
+        // MVP to implement
     }
 
     public void playHover(Brozone application) {
-        // TODO to implement
+        // MVP to implement
     }
 
     private static void setPointerPosition(InputPointer inputPointer, int screenX, int screenY) {

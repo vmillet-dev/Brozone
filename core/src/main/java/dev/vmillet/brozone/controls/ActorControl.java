@@ -11,15 +11,15 @@ public interface ActorControl {
         // Intentionally left blank
     }
 
-    boolean isLeft();
+    boolean isMovingLeft();
 
-    boolean isRight();
+    boolean isMovingRight();
 
-    boolean isUp();
+    boolean isJumping();
 
-    boolean isDown();
+    boolean isCrouching();
 
-    boolean isShoot();
+    boolean isShooting();
 
     boolean isPlayer();
 }

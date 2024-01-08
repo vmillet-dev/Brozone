@@ -32,7 +32,7 @@ public class GameScreen extends BaseScreen {
                 break;
         }
 
-        // TODO add a level manager somehow
+        // MVP add a level manager somehow
 
     }
 

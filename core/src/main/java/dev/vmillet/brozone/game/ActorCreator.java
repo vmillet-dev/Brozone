@@ -14,21 +14,21 @@ public class ActorCreator {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(ActorCreator.class);
     public Actor createPlayer(GameManager gameManager){
         logger.debug("Create player");
-        // TODO add spawn position
+        // MVP add spawn position
         Actor actor = configureAndCreateHero(gameManager);
-        // TODO add hero to the world
+        // MVP add hero to the world
         return actor;
     }
 
     private Actor configureAndCreateHero(GameManager gameManager) {
         ActorInput actorInput = createInput(gameManager);
-        // TODO equip items
+        // MVP equip items
         return new Actor(actorInput);
     }
 
     private ActorInput createInput(GameManager gameManager) {
         logger.debug("get the right input controller depending if npc or player");
-        // TODO add a way to create npc
+        // MVP add a way to create npc
         if (false) {
             return new NpcActorInput();
         } else {
@@ -36,7 +36,7 @@ public class ActorCreator {
         }
     }
 
-    // TODO to implement
+    // MVP to implement
     private void addAndEquipItems() {
         logger.debug("add some stuffs to the character");
     }

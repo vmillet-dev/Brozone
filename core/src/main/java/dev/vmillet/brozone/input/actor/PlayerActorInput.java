@@ -16,28 +16,28 @@ public class PlayerActorInput implements ActorInput {
     }
 
     @Override
-    public boolean isUp() {
-        return uiControl.isUp();
+    public boolean isJumping() {
+        return uiControl.isJumping();
     }
 
     @Override
-    public boolean isDown() {
-        return uiControl.isDown();
+    public boolean isCrouching() {
+        return uiControl.isCrouching();
     }
 
     @Override
-    public boolean isLeft() {
-        return uiControl.isLeft();
+    public boolean isMovingLeft() {
+        return uiControl.isMovingLeft();
     }
 
     @Override
-    public boolean isRight() {
-        return uiControl.isRight();
+    public boolean isMovingRight() {
+        return uiControl.isMovingRight();
     }
 
     @Override
-    public boolean isShoot() {
-        return uiControl.isShoot();
+    public boolean isShooting() {
+        return uiControl.isShooting();
     }
 
     @Override
