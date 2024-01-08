@@ -3,7 +3,7 @@ package dev.vmillet.brozone;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import dev.vmillet.brozone.input.InputManager;
+import dev.vmillet.brozone.managers.InputManager;
 import dev.vmillet.brozone.managers.GameManager;
 
 import static dev.vmillet.brozone.GdxLogger.setDebugLevelMode;
@@ -49,7 +49,7 @@ public class Brozone extends Game {
 		super.render();
 		inputManager.update(this);
 		gameManager.update();
-		// TODO maybe must add a drawing manager to draw all objects only once
+		// MVP maybe must add a drawing manager to draw all objects only once
 	}
 
 	/**
@@ -71,6 +71,7 @@ public class Brozone extends Game {
 	@Override
 	public void pause () {
 		super.pause();
+		// MVP handle pause
 	}
 
 	/**
@@ -79,6 +80,7 @@ public class Brozone extends Game {
 	@Override
 	public void resume () {
 		super.resume();
+		// MVP handle resume
 	}
 
 
@@ -93,12 +95,13 @@ public class Brozone extends Game {
 
 	public void play() {
 		logger.debug("Calling GameManager to start a game");
-		// TODO handle new game
+		// MVP handle new game
 		gameManager.startGame();
 	}
 
-	// TODO handle when game finished
-	public void finishGame() {}
+	public void finishGame() {
+		// MVP handle when game finished
+	}
 
 	public InputManager getInputManager() {
 		return inputManager;

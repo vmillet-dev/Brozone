@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.input;
+package dev.vmillet.brozone.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
+import dev.vmillet.brozone.input.InputHandler;
 import dev.vmillet.brozone.ui.BaseScreen;
 import dev.vmillet.brozone.ui.UiControl;
 import dev.vmillet.brozone.ui.UiControllerControl;
@@ -66,7 +67,7 @@ public class InputManager {
         screen.getApplication().setScreen(screen);
     }
 
-    void maybeFlashPressed(int keyCode) {
+    public void maybeFlashPressed(int keyCode) {
         for (UiControl control : keyboardControls) {
             if(control.maybeFlashPressed(keyCode)) {
                 return;
@@ -74,7 +75,7 @@ public class InputManager {
         }
     }
 
-    void maybeFlashPressed(int x, int y) {
+    public void maybeFlashPressed(int x, int y) {
         lastTouchDragPosition.set(x, y);
         setPointerPosition(flashInputPointer, x, y);
         for (UiControl control : keyboardControls) {
@@ -96,16 +97,16 @@ public class InputManager {
         }
     }
 
-    void maybeTouchDragged(int x, int y) {
-        // TODO to implement
+    public void maybeTouchDragged(int x, int y) {
+        // MVP to implement
     }
 
     public void playClick(Brozone application) {
-        // TODO to implement
+        // MVP to implement
     }
 
     public void playHover(Brozone application) {
-        // TODO to implement
+        // MVP to implement
     }
 
     private static void setPointerPosition(InputPointer inputPointer, int screenX, int screenY) {
