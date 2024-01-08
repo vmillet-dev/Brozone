@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.input.inputactor;
+package dev.vmillet.brozone.input.actor;
 
 import dev.vmillet.brozone.Brozone;
 
@@ -7,7 +7,7 @@ import dev.vmillet.brozone.Brozone;
  * make a difference between a npc character and the player character while they
  * have the same mechanisms
  */
-public interface Input {
+public interface ActorInput {
     void update(Brozone game);
 
     boolean isUp();

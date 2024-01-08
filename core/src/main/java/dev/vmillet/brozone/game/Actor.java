@@ -2,35 +2,35 @@ package dev.vmillet.brozone.game;
 
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.inputactor.Input;
+import dev.vmillet.brozone.input.actor.ActorInput;
 import dev.vmillet.brozone.managers.GameManager;
 
 /**
  *
  */
-public class Hero implements GameObject {
-    private static final GdxLogger logger = GdxLoggerFactory.getLogger(Hero.class);
+public class Actor implements GameObject {
+    private static final GdxLogger logger = GdxLoggerFactory.getLogger(Actor.class);
 
-    private final Input input;
+    private final ActorInput actorInput;
 
-    Hero(Input input) {
-        this.input = input;
+    Actor(ActorInput actorInput) {
+        this.actorInput = actorInput;
     }
     // TODO add properties like life, xp, guns
     // TODO Add drawable and handling physics with Box2D plugin
 
     @Override
     public void update(GameManager gameManager) {
-        if (input.isLeft()) {
+        if (actorInput.isLeft()) {
             logger.info("player turn left");
         }
-        if (input.isRight()) {
+        if (actorInput.isRight()) {
             logger.info("player turn right");
         }
-        if (input.isUp()) {
+        if (actorInput.isUp()) {
             logger.info("player jump");
         }
-        if (input.isDown()) {
+        if (actorInput.isDown()) {
             logger.info("player crougth");
         }
     }

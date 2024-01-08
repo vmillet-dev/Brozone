@@ -1,8 +1,8 @@
-package dev.vmillet.brozone.input.inputactor;
+package dev.vmillet.brozone.input.actor;
 
 import dev.vmillet.brozone.Brozone;
 
-public class NpcInput implements Input {
+public class NpcActorInput implements ActorInput {
 
 
     @Override

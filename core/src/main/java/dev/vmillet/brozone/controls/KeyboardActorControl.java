@@ -4,14 +4,14 @@ import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.game.Hero;
+import dev.vmillet.brozone.game.Actor;
 import dev.vmillet.brozone.managers.GameManager;
 import dev.vmillet.brozone.ui.UiControl;
 
 import java.util.List;
 
-public class KeyboardControl implements HeroControl {
-    private static final GdxLogger logger = GdxLoggerFactory.getLogger(KeyboardControl.class);
+public class KeyboardActorControl implements ActorControl {
+    private static final GdxLogger logger = GdxLoggerFactory.getLogger(KeyboardActorControl.class);
 
     public final UiControl leftControl;
     public final UiControl rightControl;
@@ -19,7 +19,7 @@ public class KeyboardControl implements HeroControl {
     public final UiControl downControl;
     public final UiControl shootControl;
 
-    public KeyboardControl(Brozone application, List<UiControl> controls) {
+    public KeyboardActorControl(Brozone application, List<UiControl> controls) {
         logger.debug("create keyboard control");
 
         GameOptions gameOptions = application.getOptions();
@@ -40,7 +40,7 @@ public class KeyboardControl implements HeroControl {
     @Override
     public void update(Brozone application, boolean enabled) {
         GameManager game = application.getGameManager();
-        Hero hero = game.getHero();
+        Actor actor = game.getHero();
 
         boolean showButtons = application.isMobile();
     }

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.InputManager;
+import dev.vmillet.brozone.managers.InputManager;
 
 /**
  * Keep and update states of all user interaction on keyboard for a specific key / mouse.

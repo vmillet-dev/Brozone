@@ -5,6 +5,7 @@ import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
 import dev.vmillet.brozone.input.mapping.controller.ControllerMappings;
 import dev.vmillet.brozone.input.mapping.controller.MappedControllerAdapter;
+import dev.vmillet.brozone.managers.InputManager;
 
 public class InputControllerHandler extends MappedControllerAdapter {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(InputControllerHandler.class);

@@ -3,8 +3,8 @@ package dev.vmillet.brozone.managers;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.game.Hero;
-import dev.vmillet.brozone.game.PlayerCreator;
+import dev.vmillet.brozone.game.Actor;
+import dev.vmillet.brozone.game.ActorCreator;
 import dev.vmillet.brozone.ui.ScreenContainer;
 
 /**
@@ -22,7 +22,7 @@ public class GameManager {
     // TODO add drawing manager
 
     private final ScreenContainer screenContainer;
-    private Hero hero;
+    private Actor actor;
 
     public GameManager(Brozone application) {
         objectManager = new ObjectManager();
@@ -40,12 +40,12 @@ public class GameManager {
 
     private void createGame() {
         logger.debug("create game!");
-        hero = new PlayerCreator().createPlayer(this);
-        objectManager.add(hero);
+        actor = new ActorCreator().createPlayer(this);
+        objectManager.add(actor);
     }
 
-    public Hero getHero() {
-        return hero;
+    public Actor getHero() {
+        return actor;
     }
     public ScreenContainer getScreens() {
         return screenContainer;

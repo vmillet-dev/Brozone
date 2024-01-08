@@ -3,7 +3,7 @@ package dev.vmillet.brozone;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import dev.vmillet.brozone.input.InputManager;
+import dev.vmillet.brozone.managers.InputManager;
 import dev.vmillet.brozone.managers.GameManager;
 
 import static dev.vmillet.brozone.GdxLogger.setDebugLevelMode;

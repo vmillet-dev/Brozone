@@ -6,17 +6,15 @@ import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.game.Hero;
+import dev.vmillet.brozone.game.Actor;
 import dev.vmillet.brozone.input.InputControllerHandler;
-import dev.vmillet.brozone.input.mapping.controller.MappedControllerAdapter;
 import dev.vmillet.brozone.managers.GameManager;
-import dev.vmillet.brozone.ui.UiControl;
 import dev.vmillet.brozone.ui.UiControllerControl;
 
 import java.util.List;
 
-public class ControllerControl implements HeroControl {
-    private static final GdxLogger logger = GdxLoggerFactory.getLogger(ControllerControl.class);
+public class ControllerActorControl implements ActorControl {
+    private static final GdxLogger logger = GdxLoggerFactory.getLogger(ControllerActorControl.class);
 
     UiControllerControl leftControl;
     UiControllerControl rightControl;
@@ -26,7 +24,7 @@ public class ControllerControl implements HeroControl {
     Controller controller;
 
 
-    public ControllerControl(Brozone application, List<UiControllerControl> controls) {
+    public ControllerActorControl(Brozone application, List<UiControllerControl> controls) {
         logger.debug("create controller control");
 
         GameOptions options = application.getOptions();
@@ -55,7 +53,7 @@ public class ControllerControl implements HeroControl {
     @Override
     public void update(Brozone application, boolean enabled) {
         GameManager game = application.getGameManager();
-        Hero hero = game.getHero();
+        Actor actor = game.getHero();
     }
 
     @Override

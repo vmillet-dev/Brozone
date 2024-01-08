@@ -3,9 +3,6 @@ package dev.vmillet.brozone.input.mapping.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
-import dev.vmillet.brozone.GdxLogger;
-import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.InputManager;
 
 /**
  * This ControllerAdapter respects the mapping you instantiate it with.
