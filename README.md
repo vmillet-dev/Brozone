@@ -83,7 +83,7 @@ If you want to execute your freshly imported project, you have to follow differe
 
 #### Desktop
 1. Extend the Gradle tab on the right sight of your window: <br/>
-   ![](/img/intellij-config-plugin-gradle.png)
+   ![](/docs/img/intellij-config-plugin-gradle.png)
 2. Expand the tasks of your project and then select: desktop -> other -> run.
 
 #### Android
@@ -106,7 +106,7 @@ To do so, open up your favourite shell or terminal, change directory to the proj
 
 You should see lots of text wizzing by, and if all goes well you should see the following line at the end:
 
-![](/img/html-superdev.png)
+![](/docs/img/html-superdev.png)
 
 You can then go to [`http://localhost:8080/index.html`](http://localhost:8080/index.html), to see your application running, with a recompile button.
 

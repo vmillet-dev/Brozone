@@ -1,3 +1,9 @@
+plugins {
+    id "jacoco"
+    id "org.sonarqube" version '3.5.0.2730'
+}
+
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets {
@@ -12,6 +18,16 @@ sourceSets {
 test {
     useJUnitPlatform()
     workingDir = new File("../assets")
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        html.outputLocation.set(file("build/jacocoHtml"))
+    }
 }
 
 eclipse.project.name = appName + "-core"
