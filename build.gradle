@@ -18,7 +18,9 @@ buildscript {
 
 plugins {
     id "java-library"
+    id "org.sonarqube" version "4.4.1.3373"
 }
+
 
 def JDK_VERSION = 17
 
@@ -86,6 +88,13 @@ project(":core") {
         testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
+
+    sonar {
+        properties {
+            property "sonar.sources", "src/main/java"
+            property "sonar.coverage.jacoco.xmlReportPaths", "$projectDir.parentFile.path/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
+        }
+    }
 }
 
 project(":desktop") {
@@ -96,6 +105,10 @@ project(":desktop") {
 
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    }
+
+    sonar {
+        skipProject true
     }
 }
 
@@ -113,6 +126,10 @@ project(":html") {
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
         api "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
     }
+
+    sonar {
+        skipProject true
+    }
 }
 
 project(":android") {
@@ -128,5 +145,9 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
 
+    }
+
+    sonar {
+        skipProject true
     }
 }

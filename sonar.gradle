@@ -1,0 +1,12 @@
+apply plugin: 'org.sonarqube'
+
+sonar {
+    properties {
+        property 'sonar.gradle.skipCompile' 'true'
+        property 'sonar.host.url', 'https://sonarcloud.io'
+        property 'sonar.organization', 'spotbugs'
+        property 'sonar.projectKey', 'dev.vmillet.brozone'
+        property 'sonar.projectName', 'Brozone'
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${project.path}/build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+    }
+}
