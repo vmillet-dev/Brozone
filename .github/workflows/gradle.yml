@@ -33,9 +33,21 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build
+      - name: Build core
         run: |
-          ./gradlew desktop:clean desktop:build android:clean android:build html:clean html:build core:clean core:build
+          ./gradlew core:clean core:build
+        working-directory: .
+      - name: Build desktop
+        run: |
+         ./gradlew desktop:clean desktop:build
+        working-directory: .
+      - name: Build android
+        run: |
+          ./gradlew android:clean android:build
+        working-directory: .
+      - name: Build html
+        run: |
+          ./gradlew  html:clean html:build
         working-directory: .
 
   test:
