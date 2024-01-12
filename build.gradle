@@ -71,6 +71,16 @@ allprojects {
     }
 }
 
+sonar {
+    properties {
+        property 'sonar.host.url', 'https://sonarcloud.io'
+        property 'sonar.organization', 'vmillet-dev'
+        property 'sonar.projectKey', 'vmillet-dev_Brozone'
+        property 'sonar.projectName', 'Brozone'
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${project.path}/build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+    }
+}
+
 project(":core") {
     apply plugin: "java-library"
 
