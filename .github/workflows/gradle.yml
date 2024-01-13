@@ -46,19 +46,19 @@ jobs:
 
       - name: Build core
         run: |
-          ./gradlew core:clean core:build
+          ./gradlew core:build -x test
         working-directory: .
       - name: Build desktop
         run: |
-         ./gradlew desktop:clean desktop:build
+         ./gradlew desktop:build -x test
         working-directory: .
       - name: Build android
         run: |
-          ./gradlew android:clean android:build
+          ./gradlew android:build -x test
         working-directory: .
       - name: Build html
         run: |
-          ./gradlew  html:clean html:build
+          ./gradlew html:build -x test
         working-directory: .
 
   test:
