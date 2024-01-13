@@ -70,6 +70,7 @@ jobs:
         working-directory: .
 
   sonarcloud:
+    environment: Sonar
     needs: test
     runs-on: ubuntu-latest
 
