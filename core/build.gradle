@@ -1,6 +1,6 @@
-plugins {
-    id 'jacoco'
-}
+apply plugin: 'com.adarshr.test-logger'
+apply plugin: 'jacoco'
+
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 

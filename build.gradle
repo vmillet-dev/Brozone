@@ -18,7 +18,9 @@ buildscript {
 
 plugins {
     id "java-library"
+    id "jacoco"
     id "org.sonarqube" version "4.4.1.3373"
+    id "com.adarshr.test-logger" version "4.0.0"
 }
 
 def JDK_VERSION = 17
