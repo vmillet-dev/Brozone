@@ -23,7 +23,7 @@ public class LoadingScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         clear(Color.DARK_GRAY);
-        // TODO load before or after main menu ?
+        // MVP load before or after main menu ?
         camera.update();
         application.play();
         application.getInputManager().setScreen(application.getGameManager().getScreens().getGameScreen());

@@ -1,8 +1,8 @@
-package dev.vmillet.brozone.input.inputactor;
+package dev.vmillet.brozone.input.actor;
 
 import dev.vmillet.brozone.Brozone;
 
-public class NpcInput implements Input {
+public class NpcActorInput implements ActorInput {
 
 
     @Override
@@ -11,27 +11,27 @@ public class NpcInput implements Input {
     }
 
     @Override
-    public boolean isUp() {
+    public boolean isJumping() {
         return false;
     }
 
     @Override
-    public boolean isDown() {
+    public boolean isCrouching() {
         return false;
     }
 
     @Override
-    public boolean isLeft() {
+    public boolean isMovingLeft() {
         return false;
     }
 
     @Override
-    public boolean isRight() {
+    public boolean isMovingRight() {
         return false;
     }
 
     @Override
-    public boolean isShoot() {
+    public boolean isShooting() {
         return false;
     }
 
