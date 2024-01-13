@@ -77,7 +77,7 @@ sonar {
         property 'sonar.organization', 'vmillet-dev'
         property 'sonar.projectKey', 'vmillet-dev_Brozone'
         property 'sonar.projectName', 'Brozone'
-        property 'sonar.coverage.jacoco.xmlReportPaths', "${project.path}/build/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${project.projectDir.toPath()}/core/build/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
 
