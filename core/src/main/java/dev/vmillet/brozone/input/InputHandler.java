@@ -6,13 +6,14 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
+import dev.vmillet.brozone.managers.InputManager;
 
 public class InputHandler implements InputProcessor, GestureDetector.GestureListener {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(InputHandler.class);
 
-    private final InputManager  inputManager;
+    private final InputManager inputManager;
 
-    InputHandler(InputManager inputMan) {
+    public InputHandler(InputManager inputMan) {
         inputManager = inputMan;
     }
 
@@ -61,7 +62,6 @@ public class InputHandler implements InputProcessor, GestureDetector.GestureList
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-//        logger.debug("mouse moved");
         return false;
     }
 

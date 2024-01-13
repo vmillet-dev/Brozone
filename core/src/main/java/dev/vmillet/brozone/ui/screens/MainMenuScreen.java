@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.InputManager;
+import dev.vmillet.brozone.managers.InputManager;
 import dev.vmillet.brozone.ui.BaseScreen;
 
 /**

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.InputManager;
+import dev.vmillet.brozone.managers.InputManager;
 
 /**
  * Keep and update states of all user interaction on keyboard for a specific key / mouse.
@@ -43,7 +43,7 @@ public class UiControl {
         this.screenArea = screenArea;
     }
 
-    // TODO handle ui control with coordinates
+    // MVP handle ui control with coordinates
 //    public UiControl(int width, int height, Position referencePosition, int offsetX, int offsetY, boolean isWithSound, int key) {
 //        this.isWithSound = isWithSound;
 //        this.key = key;
@@ -123,7 +123,7 @@ public class UiControl {
 //        logger.debug("key updated. Key pressed: " + isKeyPressed);
     }
 
-    // TODO maybe rewrite this method to better handle click on area
+    // MVP maybe rewrite this method to better handle click on area
     private void updateArea(InputManager.InputPointer[] inputPointers, boolean canBePressed) {
         if (screenArea == null) {
             return;
@@ -147,7 +147,7 @@ public class UiControl {
         }
     }
 
-    // TODO maybe rewrite this method to better handle hover on area
+    // MVP maybe rewrite this method to better handle hover on area
     private void updateHover(
             InputManager.InputPointer[] inputPointers,
             InputManager inputMan,

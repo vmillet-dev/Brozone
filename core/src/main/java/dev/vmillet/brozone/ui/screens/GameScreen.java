@@ -6,15 +6,15 @@ import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.controls.ControllerControl;
-import dev.vmillet.brozone.controls.HeroControl;
-import dev.vmillet.brozone.controls.KeyboardControl;
+import dev.vmillet.brozone.controls.ControllerActorControl;
+import dev.vmillet.brozone.controls.ActorControl;
+import dev.vmillet.brozone.controls.KeyboardActorControl;
 import dev.vmillet.brozone.ui.BaseScreen;
 
 public class GameScreen extends BaseScreen {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(GameScreen.class);
 
-    private HeroControl heroControl;
+    private ActorControl actorControl;
 
     public GameScreen(final Brozone application) {
         super(application);
@@ -24,15 +24,15 @@ public class GameScreen extends BaseScreen {
 
         switch (options.controlType) {
             case CONTROLLER:
-                heroControl = new ControllerControl(application);
+                actorControl = new ControllerActorControl(application, controllerControls);
                 break;
             case KEYBOARD:
             default:
-                heroControl = new KeyboardControl(application, controls);
+                actorControl = new KeyboardActorControl(application, keyboardControls);
                 break;
         }
 
-        // TODO add a level manager somehow
+        // MVP add a level manager somehow
 
     }
 
@@ -73,7 +73,7 @@ public class GameScreen extends BaseScreen {
 
     }
 
-    public HeroControl getHeroControl() {
-        return heroControl;
+    public ActorControl getHeroControl() {
+        return actorControl;
     }
 }
