@@ -77,5 +77,6 @@ sonar {
         property 'sonar.host.url', 'https://sonarcloud.io'
         property 'sonar.organization', 'vmillet-dev'
         property 'sonar.projectKey', 'vmillet-dev_Brozone'
+        property 'sonar.exclusions', '**/*.java'
     }
 }
