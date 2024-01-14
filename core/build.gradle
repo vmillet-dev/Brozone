@@ -34,11 +34,8 @@ test {
     useJUnitPlatform()
     workingDir = new File("../assets")
 
-    jacoco {
-        enabled = true
-    }
+    finalizedBy(jacocoTestReport)
 }
-
 
 jacocoTestReport {
     reports {
@@ -48,7 +45,6 @@ jacocoTestReport {
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 
-    dependsOn(test)
 }
 
 sonar {
