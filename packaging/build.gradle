@@ -161,3 +161,7 @@ def copyOutputFiles(platform) {
         fileMode 755
     }
 }
+
+sonar {
+    skipProject true
+}

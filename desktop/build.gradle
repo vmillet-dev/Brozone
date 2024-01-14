@@ -1,3 +1,13 @@
+apply plugin: "java-library"
+
+dependencies {
+    implementation project(":core")
+
+    implementation "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+}
+
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../assets"]
 
@@ -47,3 +57,8 @@ tasks.register('dist', Jar) {
 dist.dependsOn classes
 
 eclipse.project.name = appName + "-desktop"
+
+
+sonar {
+    skipProject true
+}
