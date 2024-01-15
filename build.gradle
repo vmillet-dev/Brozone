@@ -23,7 +23,7 @@ plugins {
     id "com.adarshr.test-logger" version "4.0.0"
 }
 
-def JDK_VERSION = 11
+def JDK_VERSION = 17
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(JDK_VERSION))
 
 allprojects {

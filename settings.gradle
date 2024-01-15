@@ -1,3 +1,2 @@
-//include 'core', 'desktop', 'html', 'android', 'packaging'
-include 'core', 'desktop', 'html', 'packaging'
+include 'core', 'desktop', 'html', 'android', 'packaging'
 System.setProperty("sonar.gradle.skipCompile", "true")
