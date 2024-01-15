@@ -33,13 +33,11 @@ sourceSets {
 test {
     useJUnitPlatform()
     workingDir = new File("../assets")
-
-    finalizedBy(jacocoTestReport)
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
-        csv.required = false
         xml.required = true
         html.required = true
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
@@ -50,8 +48,8 @@ jacocoTestReport {
 sonar {
     properties {
         property "sonar.sources", "src/main/java"
-        property "sonar.java.binaries", "$projectDir.path/build/classes/java"
-        property "sonar.coverage.jacoco.xmlReportPaths", "$projectDir.path/build/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.java.binaries", "build/classes/java"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
 
