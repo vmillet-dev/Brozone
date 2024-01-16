@@ -1,7 +1,8 @@
 apply plugin: "com.android.application"
 
-configurations { natives }
+eclipse.project.name = appName + "-android"
 
+configurations { natives }
 
 dependencies {
     implementation project(":core")
@@ -104,8 +105,6 @@ tasks.register('run', Exec) {
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'dev.vmillet.brozone/dev.vmillet.brozone.AndroidLauncher'
 }
-
-eclipse.project.name = appName + "-android"
 
 sonar {
     skipProject true

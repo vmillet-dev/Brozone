@@ -3,6 +3,8 @@ apply plugin: "war"
 apply plugin: "org.gretty"
 apply plugin: "java-library"
 
+eclipse.project.name = appName + "-html"
+
 dependencies {
     implementation project(":core")
 
@@ -13,6 +15,8 @@ dependencies {
     implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
     implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 }
+
+sourceSets.main.java.srcDirs = [ "src/" ]
 
 gwt {
     gwtVersion='2.10.0'
@@ -105,6 +109,6 @@ tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 tasks.checkGwt.dependsOn(addSource)
 
-sourceSets.main.java.srcDirs = [ "src/" ]
-
-eclipse.project.name = appName + "-html"
+sonar {
+    skipProject true
+}
