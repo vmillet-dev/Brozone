@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://artifactory.nimblygames.com/artifactory/ng-public"}
+        maven { url "https://artifactory.nimblygames.com/artifactory/ng-public" }
         google()
     }
     dependencies {
@@ -77,6 +77,5 @@ sonar {
         property 'sonar.host.url', 'https://sonarcloud.io'
         property 'sonar.organization', 'vmillet-dev'
         property 'sonar.projectKey', 'vmillet-dev_Brozone'
-        property 'sonar.exclusions', '**/*.java'
     }
 }

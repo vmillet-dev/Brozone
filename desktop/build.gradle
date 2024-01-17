@@ -1,5 +1,7 @@
 apply plugin: "java-library"
 
+eclipse.project.name = appName + "-desktop"
+
 dependencies {
     implementation project(":core")
 
@@ -53,11 +55,7 @@ tasks.register('dist', Jar) {
     with jar
 }
 
-
 dist.dependsOn classes
-
-eclipse.project.name = appName + "-desktop"
-
 
 sonar {
     skipProject true
