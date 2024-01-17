@@ -59,10 +59,6 @@ allprojects {
         generateJdkUrl = { String platform ->
             return "https://api.adoptium.net/v3/binary/latest/${JDK_VERSION}/ga/${platform.toString().toLowerCase()}/x64/jdk/hotspot/normal/eclipse?project=jdk"
         }
-//
-//        urlJdkWindows = 'https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip'
-//        urlJdkMacOs = 'https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_macos-x64_bin.tar.gz'
-//        urlJdkLinux = 'https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz'
     }
 
     repositories {

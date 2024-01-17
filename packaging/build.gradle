@@ -1,7 +1,7 @@
 import com.badlogicgames.packr.Packr
 import com.badlogicgames.packr.PackrConfig
+import java.util.zip.ZipEntry
 
-apply plugin: "de.undercouch.download"
 apply plugin: "org.beryx.jlink"
 
 def ICON_PATH = new File("$rootDir/assets/badlogic.jpg")
@@ -15,6 +15,16 @@ tasks.register('releaseHtml', Zip) {
     destinationDirectory = file(project.projectDir.path + "/release")
 }
 
+tasks.register('releaseAndroid') {
+    dependsOn(":android:assembleDebug")
+
+    copy {
+        from "${project(":android").projectDir.path}/build/outputs/apk"
+        into "release/"
+        fileMode 755
+    }
+}
+
 tasks.register('analyzeDependencies') {
     doLast {
         exec {
@@ -25,6 +35,7 @@ tasks.register('analyzeDependencies') {
 }
 
 tasks.register('createMinimalJre', JavaExec) {
+    dependsOn(":desktop:dist")
     dependsOn analyzeDependencies
 
     mainClassName = project(":desktop").ext.mainClassName
@@ -85,7 +96,8 @@ tasks.register('createMinimalJre', JavaExec) {
 PackrConfig.Platform.values().each { platform ->
     tasks.register("packr${platform}") {
         doLast {
-            def outputDir = "build/output-${platform.toString().toLowerCase()}"
+            def outputDir = file("build/output-${platform.toString().toLowerCase()}")
+            def zipFile = file("build/release/${platform.toString().toLowerCase()}.zip")
             def config = new PackrConfig()
 
             config.with {
@@ -94,33 +106,43 @@ PackrConfig.Platform.values().each { platform ->
 
                 jdk = "${projectDir.path}/jdks/${platform.toString().toLowerCase()}.zip"
                 classpath = [ project(":desktop").projectDir.path + "/build/libs/${getNeatVersionString()}.jar" ]
-                mainclass = project(":desktop").ext.mainClassName
+                mainClass = project(":desktop").ext.mainClassName
 
                 removePlatformLibs = config.classpath
                 bundleIdentifier = getPackage() + ".mac"
                 iconResource = ICON_PATH
-                output = outputDir
+                outDir = outputDir
 
                 if (platform == PackrConfig.Platform.MacOS) {
-                    icon = "chemin/vers/votre/icone.icns"
-                } else if (platform == PackrConfig.Platform.Windows64) {
-                    icon = "chemin/vers/votre/icone.ico"
-                }
-
-                if (platform == PackrConfig.Platform.MacOS) {
+                    iconResource = file("chemin/vers/votre/icone.icns")
                     vmArgs = ["XstartOnFirstThread"]
+                } else if (platform == PackrConfig.Platform.Windows64) {
+                    iconResource = file("chemin/vers/votre/icone.ico")
                 }
             }
 
             new Packr().pack(config)
+
+            project.delete(zipFile)
+            project.zipTree(outputDir).visit { FileVisitDetails details ->
+                if (details.isDirectory()) return
+                def relativePath = outputDir.toPath().relativize(details.file.toPath()).toString()
+                zipFile.withOutputStream { zipOutputStream ->
+                    zipOutputStream.putNextEntry(new ZipEntry(relativePath))
+                    Files.copy(details.file.toPath(), zipOutputStream)
+                    zipOutputStream.closeEntry()
+                }
+            }
         }
     }
 }
 
-tasks.register('generateExecutables') {
+tasks.register('packageReleaseAllPlateforms') {
     dependsOn createMinimalJre
+
     dependsOn PackrConfig.Platform.values().collect { "packr${it}" }
-    dependsOn("releaseHtml")
+    dependsOn releaseHtml
+    dependsOn releaseAndroid
 }
 
 
