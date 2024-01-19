@@ -44,7 +44,7 @@ allprojects {
         }
 
         getNeatVersionString = {
-            return "${appName}-v$version"
+            return "${appName.toLowerCase()}-v$version"
         }
 
         generateDesktopReleaseName = { String platform ->
@@ -57,7 +57,7 @@ allprojects {
         }
 
         generateJdkUrl = { String platform ->
-            return "https://api.adoptium.net/v3/binary/latest/${JDK_VERSION}/ga/${platform.toString().toLowerCase()}/x64/jdk/hotspot/normal/eclipse?project=jdk"
+            return "https://api.adoptium.net/v3/binary/latest/${JDK_VERSION}/ga/${platform.toLowerCase().replace("64", "").replace("os", "")}/x64/jdk/hotspot/normal/eclipse?project=jdk"
         }
     }
 

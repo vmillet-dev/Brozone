@@ -4,169 +4,111 @@ import com.badlogicgames.packr.PackrConfig
 import java.nio.file.Files
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+import org.apache.commons.io.FileUtils
 
-apply plugin: "org.beryx.jlink"
+sonar.skipProject true
 
-def ICON_PATH = new File("$rootDir/assets/badlogic.jpg")
+tasks.register('packageReleaseAllPlateforms') {
+    dependsOn downloadJdks
+
+    dependsOn PackrConfig.Platform.values().collect { "packr${it}" }
+    dependsOn releaseHtml
+    dependsOn releaseAndroid
+
+    doFirst {
+        delete {
+            delete "build/output/"
+        }
+    }
+}
 
 tasks.register('releaseHtml', Zip) {
     dependsOn(":html:dist")
 
-    from (project(":html").projectDir.path + "/build/dist")
+    from (project(":html").projectDir + "/build/dist")
     include "**/*"
     archiveFileName = "${getNeatVersionString()}-js.zip"
-    destinationDirectory = file(project.projectDir.path + "/release")
+    destinationDirectory = file("release/")
 }
 
 tasks.register('releaseAndroid') {
     dependsOn(":android:assembleDebug")
 
     copy {
-        from "${project(":android").projectDir.path}/build/outputs/apk/debug/*.apk"
+        from "${project(":android").projectDir}/build/outputs/apk/debug/android-debug.apk"
         into "release/"
         fileMode 755
+        rename "android-debug.apk", "${getNeatVersionString()}.apk"
     }
-}
-
-tasks.register('analyzeDependencies') {
-    dependsOn(":desktop:dist")
-
-    doLast {
-        File resultFile = file("build/libs/jdeps-result.txt")
-        resultFile.parentFile.mkdirs()
-        if (resultFile.exists()) {
-            resultFile.delete()
-        }
-
-        exec {
-            commandLine 'jdeps', '-R', '-cp', "${project(":desktop").projectDir.path}/build/libs", "${project(":desktop").projectDir.path}/build/classes"
-            standardOutput = new FileOutputStream(resultFile, true)
-        }
-
-        exec {
-            commandLine 'jdeps', '-R', '-cp', "${project(":core").projectDir.path}/build/libs", "${project(":core").projectDir.path}/build/classes"
-            standardOutput = new FileOutputStream(resultFile, true)
-        }
-    }
-}
-
-tasks.register('createMinimalJre') {
-    dependsOn analyzeDependencies
-
-//    mainClass = project(":desktop").ext.mainClassName
-
-//    jlink {
-//        imageDir = file('build/minimalJre')
-//        launcher {
-//            name = appName
-//        }
-//
-//        addOptions('--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages')
-//
-//        doFirst {
-//
-//            customImage {
-//                def dependencies = []
-//
-//                new File("$projectDir.path/build/libs/jdeps-result.txt").eachLine { line ->
-//                    def matcher = line =~ /\s+->\s+(\S+)\s+not found/
-//
-//                    if (matcher.find()) {
-//                        def module = matcher.group(1)
-//                        println(module)
-//                        dependencies.add(module)
-//                    }
-//                }
-//
-//                jdkModules = Arrays.stream(dependencies).distinct().collect(Collectors.toList())
-//            }
-//        }
-//
-//        targetPlatform("linux-x64") {
-//            jdkHome = jdkDownload(generateJdkUrl("linux")) {
-//                downloadDir = "$projectDir.path/jdks"
-//                archiveName = "${PackrConfig.Platform.Linux64.toString().toLowerCase()}-jdk"
-//                archiveExtension = "zip"
-//                overwrite = false
-//            }
-//            addOptions("--endian", "big")
-//            addExtraModulePath("/usr/lib/openjfx/linux-x64/jmods")
-//        }
-//
-//        targetPlatform("win") {
-//            jdkHome = jdkDownload(generateJdkUrl("windows")) {
-//                downloadDir = "$projectDir.path/jdks"
-//                archiveName = "${PackrConfig.Platform.Windows64.toString().toLowerCase()}-jdk"
-//                archiveExtension = "zip"
-//                overwrite = false
-//            }
-//            addExtraModulePath("/usr/lib/openjfx/win/jmods")
-//        }
-//
-//        targetPlatform("mac") {
-//            jdkHome = jdkDownload(generateJdkUrl("macos")) {
-//                downloadDir = "$projectDir.path/jdks"
-//                archiveName = "${PackrConfig.Platform.MacOS.toString().toLowerCase()}-jdk"
-//                archiveExtension = "zip"
-//                overwrite = false
-//            }
-//            addExtraModulePath("/usr/lib/openjfx/mac/jmods")
-//        }
-//    }
 }
 
 PackrConfig.Platform.values().each { platform ->
     tasks.register("packr${platform}") {
-        if (platform == PackrConfig.Platform.Linux64 || platform == PackrConfig.Platform.MacOS) {
-            return
+        doFirst {
+            def fileUrl = generateJdkUrl(platform.toString())
+            def outputDir = file("build/jdks")
+
+            ant {
+                get(src: fileUrl, dest: outputDir)
+            }
         }
+
         doLast {
-            def outputDir = file("build/output/${platform.toString().toLowerCase().replace("64", "")}")
-            def zipFile = "${platform.toString().toLowerCase().replace("64", "")}.zip"
+            def artifactName = platform.toString().toLowerCase().replace("64", "")
+            def outputDir = file("build/output/${artifactName}")
+            def zipFile = file("${artifactName}.zip")
             def config = new PackrConfig()
 
             config.with {
                 executable = appName
                 config.platform = platform
 
-                jdk = generateJdkUrl(platform.toString().toLowerCase().replace("64", "").replace("os", ""))
-                classpath = [ project(":desktop").projectDir.path + "/build/libs/${getNeatVersionString()}.jar" ]
+                jdk = generateJdkUrl(platform.toString())
+                classpath = [ project(":desktop").projectDir + "/build/libs/${getNeatVersionString()}.jar" ]
                 mainClass = project(":desktop").ext.mainClassName
 
                 removePlatformLibs = config.classpath
                 bundleIdentifier = getPackage() + ".mac"
-                iconResource = ICON_PATH
                 outDir = outputDir
 
                 vmArgs = []
 
                 if (platform == PackrConfig.Platform.MacOS) {
                     vmArgs += "XstartOnFirstThread"
-//                    iconResource = file("chemin/vers/votre/icone.icns")
+                    iconResource = file("$rootDir/assets/icons/brozone.icns")
                 } else {
-//                    iconResource = file("chemin/vers/votre/icone.ico")
+                    iconResource = file("$rootDir/asset/icons/brozone.ico")
                 }
             }
 
             new Packr().pack(config)
 
-            createZip(outputDir, zipFile.toString())
-             {
-
-            }
+            createZip(outputDir, zipFile)
         }
     }
 }
 
+tasks.register('downloadJdks') {
+    PackrConfig.Platform.values().each { platform ->
+        def fileName = platform.toString().toLowerCase()
+        if (!file("build/jdks/${fileName}.zip").exists()) {
+            def fileUrl = generateJdkUrl(platform.toString())
+            def outputDir = file("build/temp")
 
-def createZip(File sourceDir, String zipFilePath) {
-    println(zipFilePath)
+            def downloadedFile = new File(outputDir, "${fileName}.zip")
+            FileUtils.copyURLToFile(new URL(fileUrl), downloadedFile)
+            FileUtils.moveFileToDirectory(downloadedFile, file("build/jdks"), true)
+        }
+    }
+}
+
+def createZip(File sourceDir, File zipFile) {
     ConfigurableFileTree tree = fileTree(dir: sourceDir)
+    zipFile.parentFile.mkdirs()
 
-    try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFilePath))) {
+    try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(zipFile))) {
+        zipOutputStream.setLevel(9)
         tree.each {File file ->
-            println file
-
             String relativePath = sourceDir.toPath().relativize(file.toPath()).toString().replace('\\', '/')
             ZipEntry zipEntry = new ZipEntry(relativePath)
 
@@ -181,209 +123,4 @@ def createZip(File sourceDir, String zipFilePath) {
     } catch (IOException e) {
         throw new RuntimeException("Erreur lors de la création du fichier ZIP.", e)
     }
-//    file("$rootDir.path/zipFilePath").renameTo("$project.path/release")
-}
-
-tasks.register('packageReleaseAllPlateforms') {
-    dependsOn createMinimalJre
-
-    dependsOn PackrConfig.Platform.values().collect { "packr${it}" }
-//    dependsOn releaseHtml
-//    dependsOn releaseAndroid
-
-    delete {
-        delete "build/output/"
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//String getUrlByPlatform(PackrConfig.Platform platform) {
-//    switch (platform) {
-//        case PackrConfig.Platform.Windows64: return "${urlJdkWindows}"
-//        case PackrConfig.Platform.MacOS: return "${urlJdkMacOs}"
-//        case PackrConfig.Platform.Linux64: return "${urlJdkLinux}"
-//    }
-//}
-//
-//tasks.register('releaseAllPlatform') {
-//    PackrConfig.Platform.values().each { platform ->
-//        if (platform == PackrConfig.Platform.Linux64) {
-//            return
-//        }
-//        dependsOn "zip${platform.toString()}"
-//    }
-//
-//    dependsOn("releaseHtml")
-//}
-//
-//tasks.register('releaseHtml', Zip) {
-//    dependsOn(":html:war")
-//    copy {
-//        from (project(":html").projectDir.path + "/build/libs")
-//        into "release/"
-//    }
-//
-//    dependsOn(":html:dist")
-//
-//    from (project(":html").projectDir.path + "/build/dist")
-//    include "**/*"
-//    archiveFileName = "${getNeatVersionString()}-js.zip"
-//    destinationDirectory = file(project.projectDir.path + "/release")
-//}
-//
-//PackrConfig.Platform.values().each { platform ->
-//    def platformName = platform.toString()
-//
-//    configurePackageTask(platform, ICON_PATH)
-//
-//    tasks.named("package${platformName}") {
-//        finalizedBy "zip${platformName}"
-//    }
-//
-//    tasks.register("zip${platformName}", Zip) {
-//        dependsOn "package${platformName}"
-//
-//        from "build/output"
-//        include "**/*"
-//        archiveFileName = "${generateDesktopReleaseName(platformName)}.zip"
-//        destinationDirectory = file(project.projectDir.path + "/release")
-//
-//        delete "build/"
-//    }
-//}
-//
-//def configurePackageTask(PackrConfig.Platform platform, ICON_PATH) {
-//    tasks.register("package${platform.toString()}") {
-//        dependsOn(":desktop:dist")
-//
-//        doLast {
-//            copy {
-//                into "build/"
-//                rename("${appName}.jar", "desktop.jar")
-//                from "build/libs/${appName}.jar"
-//            }
-//
-//            delete {
-//                delete "build/output/"
-//            }
-//
-//            def config = new PackrConfig()
-//
-//            config.with {
-//                config.executable = appName
-//                config.platform = platform
-//                verbose = true
-//                bundleIdentifier = getPackage() + ".mac"
-//                iconResource = ICON_PATH
-//                outDir = file("build/output")
-//                mainClass = project(":desktop").ext.mainClassName
-//                classpath = [ project(":desktop").projectDir.path + "/build/libs/${getNeatVersionString()}.jar" ]
-//                removePlatformLibs = config.classpath
-//
-//                jdk = configureJdk(platform)
-//
-//                vmArgs = []
-//                minimizeJre = "$rootDir/packaging/packr_minimize.json".toString()
-//
-//                if (platform == PackrConfig.Platform.MacOS) {
-//                    vmArgs += "XstartOnFirstThread"
-//                }
-//            }
-//
-//            new Packr().pack(config)
-//
-//            copyOutputFiles(platform)
-//        }
-//    }
-//}
-//
-//def configureJdk(PackrConfig.Platform platform) {
-//    if (!activeJdkCache) {
-//        return getUrlByPlatform(platform)
-//    }
-//
-//    def jdkZip = new File(project.projectDir.path + "/cache/${platform.toString().toLowerCase()}" + "/jdk.zip")
-//    if (!jdkZip.exists()) {
-//        download.run {
-//            src getUrlByPlatform(platform)
-//            dest jdkZip
-//            overwrite true
-//        }
-//    }
-//
-//    return jdkZip.getAbsolutePath()
-//}
-//
-//def copyOutputFiles(platform) {
-//    if (platform != PackrConfig.Platform.MacOS) {
-//        copy {
-//            into "build/output/jre/"
-//            from "build/output/desktop.jar"
-//        }
-//
-//        delete {
-//            delete "build/output/desktop.jar"
-//        }
-//
-//        file("build/output/${appName}.json").text = file("build/output/${appName}.json").text.replace("desktop.jar", "jre/desktop.jar")
-//    }
-//
-//    if (platform == PackrConfig.Platform.MacOS) {
-//        copy {
-//            into "build/output/${appName}.app/Contents/"
-//            from "build/output/Contents/"
-//        }
-//
-//        delete {
-//            delete "build/output/Contents/"
-//        }
-//    }
-//
-//    if (platform == PackrConfig.Platform.Windows64) {
-//        copy {
-//            from "build/output/jre/bin/msvcr100.dll"
-//            into "build/output/"
-//            rename("msvcr100.dll", "MSVCR100.dll")
-//        }
-//    }
-//
-//    copy {
-//        from "build/output"
-//        into "deploy/${platform.toString().toLowerCase()}"
-//        fileMode 755
-//    }
-//}
-
-sonar {
-    skipProject true
 }
