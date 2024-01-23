@@ -6,25 +6,24 @@ import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.game.Actor;
 import dev.vmillet.brozone.input.InputControllerHandler;
-import dev.vmillet.brozone.managers.GameManager;
-import dev.vmillet.brozone.ui.UiControllerControl;
+import dev.vmillet.brozone.ui.UiControl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControllerActorControl implements ActorControl {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(ControllerActorControl.class);
 
-    UiControllerControl leftControl;
-    UiControllerControl rightControl;
-    UiControllerControl upControl;
-    UiControllerControl downControl;
-    UiControllerControl shootControl;
+    UiControl leftControl;
+    UiControl rightControl;
+    UiControl jumpControl;
+    UiControl crouchControl;
+    UiControl shootControl;
     Controller controller;
 
 
-    public ControllerActorControl(Brozone application, List<UiControllerControl> controls) {
+    public ControllerActorControl(Brozone application) {
         logger.debug("create controller control");
 
         GameOptions options = application.getOptions();
@@ -37,17 +36,19 @@ public class ControllerActorControl implements ActorControl {
         controller = Controllers.getCurrent();
         controller.addListener(inputControllerHandler);
 
-        leftControl = new UiControllerControl(controller, GameOptions.BUTTON_FIRE);
-        rightControl = new UiControllerControl(controller, GameOptions.BUTTON_FIRE);
-        upControl = new UiControllerControl(controller, GameOptions.BUTTON_FIRE);
-        downControl = new UiControllerControl(controller, GameOptions.BUTTON_FIRE);
-        shootControl = new UiControllerControl(controller, GameOptions.BUTTON_FIRE);
+        leftControl = new UiControl(GameOptions.AXIS_HORIZONTAL, true);
+        rightControl = new UiControl(GameOptions.AXIS_HORIZONTAL, false);
+        jumpControl = new UiControl(GameOptions.BUTTON_JUMP);
+        crouchControl = new UiControl(GameOptions.BUTTON_CROUCH);
+        shootControl = new UiControl(GameOptions.BUTTON_SHOOT);
 
+        List<UiControl> controls = new ArrayList<>();
         controls.add(leftControl);
         controls.add(rightControl);
-        controls.add(upControl);
-        controls.add(downControl);
+        controls.add(jumpControl);
+        controls.add(crouchControl);
         controls.add(shootControl);
+        application.getInputManager().addControls(controls);
     }
 
     @Override
@@ -67,12 +68,12 @@ public class ControllerActorControl implements ActorControl {
 
     @Override
     public boolean isJumping() {
-        return upControl.isOn();
+        return jumpControl.isOn();
     }
 
     @Override
     public boolean isCrouching() {
-        return downControl.isOn();
+        return crouchControl.isOn();
     }
 
     @Override
