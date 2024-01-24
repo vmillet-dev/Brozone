@@ -23,8 +23,8 @@ public class CustomControllerMapping extends ControllerMappings {
         addConfiguredInput(new ConfiguredInput(ConfiguredInput.Type.button, BUTTON_SHOOT));
         addConfiguredInput(new ConfiguredInput(ConfiguredInput.Type.button, BUTTON_START));
         addConfiguredInput(new ConfiguredInput(ConfiguredInput.Type.button, BUTTON_CANCEL));
-        addConfiguredInput(new ConfiguredInput(ConfiguredInput.Type.axisDigital, AXIS_HORIZONTAL));
-        addConfiguredInput(new ConfiguredInput(ConfiguredInput.Type.axisDigital, AXIS_VERTICAL));
+        addConfiguredInput(new ConfiguredInput(ConfiguredInput.Type.axisAnalog, AXIS_HORIZONTAL));
+        addConfiguredInput(new ConfiguredInput(ConfiguredInput.Type.axisAnalog, AXIS_VERTICAL));
 
         commitConfig();
     }

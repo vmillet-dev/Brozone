@@ -16,12 +16,14 @@ import dev.vmillet.brozone.managers.InputManager;
 public class UiControl {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(UiControl.class);
 
+    private final float TOLERANCE_AXIS = 0.01f;
+
     private final int inputId;
     private Rectangle screenArea;
     private boolean isEnabled = true;
-    private boolean isInputPressed;
-    private boolean wasInputPressed;
-    private boolean isInputFlashed;
+    private boolean isControllerPressed;
+    private boolean isKeyPressed;
+    private boolean isKeyFlashed;
     private boolean isAreaPressed;
     private boolean isAreaFlashed;
     private boolean isAreaJustUnpressed;
@@ -45,35 +47,34 @@ public class UiControl {
     }
 
     public void axisMoved(int axisId, float value) {
-        if (axisId == this.inputId && value < 0.0 == isNegativeValue) {
-            isInputFlashed = true;
+        if (axisId == this.inputId) {
+            isControllerPressed = isNegativeValue ? (value < -TOLERANCE_AXIS) : (value > TOLERANCE_AXIS);
         }
-
     }
 
     public void buttonControllerPressed(int buttonId) {
         if (buttonId == this.inputId) {
-            isInputFlashed = true;
+            isControllerPressed = true;
         }
     }
 
     public void buttonControllerReleased(int buttonId) {
         if (buttonId == this.inputId) {
-            isInputFlashed = false;
+            isControllerPressed = false;
         }
     }
 
     public boolean maybeFlashPressed(int keyCode) {
         logger.debug("key pressed: " + Input.Keys.toString(keyCode));
         logger.debug("key defined in control: " + Input.Keys.toString(inputId));
-        logger.debug("isKeyFlashed: " + isInputFlashed);
-        logger.debug("isKeyPressed: " + isInputPressed);
+        logger.debug("isKeyFlashed: " + isKeyFlashed);
+        logger.debug("isKeyPressed: " + isKeyPressed);
 
         if (!isEnabled) {
             return false;
         }
         if (inputId == keyCode) {
-            isInputFlashed = true;
+            isKeyFlashed = true;
             return true;
         }
 
@@ -105,17 +106,15 @@ public class UiControl {
     }
 
     private void updateKeys(boolean canBePressed) {
-        wasInputPressed = isInputPressed;
-        if (isInputFlashed) {
-            isInputPressed = true;
-            isInputFlashed = false;
+        if (isKeyFlashed) {
+            isKeyPressed = true;
+            isKeyFlashed = false;
         } else {
-            isInputPressed = canBePressed && Gdx.input.isKeyPressed(inputId);
+            isKeyPressed = canBePressed && Gdx.input.isKeyPressed(inputId);
         }
     }
 
-    // poll to perform continuous actions
     public boolean isOn() {
-        return isEnabled && (isInputPressed || isAreaPressed);
+        return isEnabled && (isKeyPressed || isAreaPressed || isControllerPressed);
     }
 }

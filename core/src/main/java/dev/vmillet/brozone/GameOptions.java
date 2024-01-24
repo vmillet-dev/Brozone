@@ -24,7 +24,7 @@ public class GameOptions {
         }
     }
 
-    public ControlType controlType = ControlType.KEYBOARD;
+        public ControlType controlType = ControlType.CONTROLLER;
 
     CustomControllerMapping customControllerMapping;
 

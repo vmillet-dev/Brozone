@@ -33,7 +33,7 @@ public class InputControllerHandler extends MappedControllerAdapter {
 
     @Override
     public boolean configuredAxisMoved(Controller controller, int axisId, float value) {
-        logger.debug("axis id: " + axisId);
+        logger.debug("axis id: " + axisId + ", value: " + value);
         inputManager.axisMoved(axisId, value);
         return false;
     }

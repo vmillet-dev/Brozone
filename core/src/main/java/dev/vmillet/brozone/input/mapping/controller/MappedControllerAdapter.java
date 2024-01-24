@@ -83,11 +83,13 @@ public class MappedControllerAdapter extends ControllerAdapter {
 
     @Override
     public boolean buttonDown(Controller controller, int buttonIndex) {
+        Gdx.app.log(ControllerMappings.LOG_TAG, "Button down " + buttonIndex);
         return buttonChange(controller, buttonIndex, true);
     }
 
     @Override
     public boolean buttonUp(Controller controller, int buttonIndex) {
+        Gdx.app.log(ControllerMappings.LOG_TAG, "Button up " + buttonIndex);
         return buttonChange(controller, buttonIndex, false);
     }
 
@@ -108,8 +110,7 @@ public class MappedControllerAdapter extends ControllerAdapter {
             case axisAnalog:
                 return configuredAxisMoved(controller, configuredInput.inputId, value);
             case axisDigital:
-                return configuredAxisMoved(controller, configuredInput.inputId,
-                        Math.abs(value) < analogToDigitalTreshold ? 0 : 1 * Math.signum(value));
+                return configuredAxisMoved(controller, configuredInput.inputId, Math.abs(value) < analogToDigitalTreshold ? 0 : 1 * Math.signum(value));
             default:
                 // button may not happen
                 Gdx.app.log(ControllerMappings.LOG_TAG, "Axis mapped to button not allowed!");
