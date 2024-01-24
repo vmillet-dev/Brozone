@@ -22,16 +22,19 @@ public class Actor implements GameObject {
     @Override
     public void update(GameManager gameManager) {
         if (actorInput.isMovingLeft()) {
-            logger.info("player turn left");
+            logger.info("player move left");
         }
         if (actorInput.isMovingRight()) {
-            logger.info("player turn right");
+            logger.info("player move right");
         }
         if (actorInput.isJumping()) {
             logger.info("player jump");
         }
         if (actorInput.isCrouching()) {
-            logger.info("player crougth");
+            logger.info("player crouch");
+        }
+        if (actorInput.isShooting()) {
+            logger.info("player shooting");
         }
     }
 }

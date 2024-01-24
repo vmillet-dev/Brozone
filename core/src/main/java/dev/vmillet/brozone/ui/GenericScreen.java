@@ -10,17 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base class extended by all object that should implement Screen interface
+ * Generic class extended by all object that should implement Screen interface
  */
-public abstract class BaseScreen implements Screen  {
+public abstract class GenericScreen implements Screen  {
     protected final Brozone application;
     protected final Viewport viewport;
     protected final OrthographicCamera camera;
 
-    protected List<UiControl> keyboardControls = new ArrayList<>();
-    protected List<UiControllerControl> controllerControls = new ArrayList<>();
+    protected List<UiControl> screenControl = new ArrayList<>();
 
-    protected BaseScreen(Brozone application) {
+    protected GenericScreen(Brozone application) {
         this.application = application;
 
         camera = new OrthographicCamera();
@@ -28,7 +27,5 @@ public abstract class BaseScreen implements Screen  {
     }
 
     public Brozone getApplication() { return application; }
-    public List<UiControl> getKeyboardControls() { return keyboardControls; }
-    public List<UiControllerControl> getControllerControls() { return controllerControls; }
 
 }

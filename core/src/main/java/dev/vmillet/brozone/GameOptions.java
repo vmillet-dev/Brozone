@@ -24,7 +24,7 @@ public class GameOptions {
         }
     }
 
-    public ControlType controlType = ControlType.CONTROLLER;
+        public ControlType controlType = ControlType.CONTROLLER;
 
     CustomControllerMapping customControllerMapping;
 
@@ -37,11 +37,12 @@ public class GameOptions {
     private String keyShootName = "Space";
 
     public static final int BUTTON_JUMP = 0;
-    public static final int BUTTON_FIRE = 1;
-    public static final int AXIS_VERTICAL = 2;
+    public static final int BUTTON_CROUCH = 1;
+    public static final int BUTTON_SHOOT = 2;
     public static final int AXIS_HORIZONTAL = 3;
-    public static final int BUTTON_START = 4;
-    public static final int BUTTON_CANCEL = 5;
+    public static final int AXIS_VERTICAL = 4;
+    public static final int BUTTON_START = 5;
+    public static final int BUTTON_CANCEL = 6;
 
     public GameOptions() {
         customControllerMapping = new CustomControllerMapping();

@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.ui.BaseScreen;
+import dev.vmillet.brozone.ui.GenericScreen;
 
 import static com.badlogic.gdx.utils.ScreenUtils.clear;
 
-public class LoadingScreen extends BaseScreen {
+public class LoadingScreen extends GenericScreen {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(LoadingScreen.class);
 
     public LoadingScreen(Brozone application) {
@@ -26,7 +26,7 @@ public class LoadingScreen extends BaseScreen {
         // MVP load before or after main menu ?
         camera.update();
         application.play();
-        application.getInputManager().setScreen(application.getGameManager().getScreens().getGameScreen());
+        application.setScreen(application.getGameManager().getScreens().getGameScreen());
         dispose();
     }
 

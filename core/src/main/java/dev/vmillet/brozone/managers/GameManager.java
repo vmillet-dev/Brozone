@@ -33,14 +33,16 @@ public class GameManager {
         objectManager.update(this);
     }
 
-    public void startGame() {
-        createGame();
+    public void startGame(Brozone brozone) {
+        createGame(brozone);
         logger.debug("start game !");
     }
 
-    private void createGame() {
+    private void createGame(Brozone app) {
         logger.debug("create game!");
-        actor = new ActorCreator().createPlayer(this);
+        app.getInputManager().resetControls();
+        actor = new ActorCreator().createPlayer(app, app.getOptions().controlType);
+
         objectManager.add(actor);
     }
 

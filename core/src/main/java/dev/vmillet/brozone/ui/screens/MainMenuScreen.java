@@ -5,13 +5,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.managers.InputManager;
-import dev.vmillet.brozone.ui.BaseScreen;
+import dev.vmillet.brozone.ui.GenericScreen;
 
 /**
  * Screen class that handle main menu.
  */
-public class MainMenuScreen extends BaseScreen {
+public class MainMenuScreen extends GenericScreen {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(MainMenuScreen.class);
 
     public MainMenuScreen(final Brozone application) {
@@ -36,8 +35,7 @@ public class MainMenuScreen extends BaseScreen {
         application.batch.end();
 
         if (Gdx.input.isTouched()) {
-            InputManager inputManager = application.getInputManager();
-            inputManager.setScreen(application.getGameManager().getScreens().getLoadingScreen());
+            application.setScreen(application.getGameManager().getScreens().getLoadingScreen());
             dispose();
         }
     }

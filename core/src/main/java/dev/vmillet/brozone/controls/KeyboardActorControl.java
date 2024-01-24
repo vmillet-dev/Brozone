@@ -4,10 +4,9 @@ import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.game.Actor;
-import dev.vmillet.brozone.managers.GameManager;
 import dev.vmillet.brozone.ui.UiControl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KeyboardActorControl implements ActorControl {
@@ -19,22 +18,24 @@ public class KeyboardActorControl implements ActorControl {
     public final UiControl crouchControl;
     public final UiControl shootControl;
 
-    public KeyboardActorControl(Brozone application, List<UiControl> controls) {
+    public KeyboardActorControl(Brozone application) {
         logger.debug("create keyboard control");
 
         GameOptions gameOptions = application.getOptions();
 
-        moveLeftControl = new UiControl(null, false, gameOptions.getKeyLeft());
-        moveRightControl = new UiControl(null, false, gameOptions.getKeyRight());
-        jumpControl = new UiControl(null, false, gameOptions.getKeyUp());
-        crouchControl = new UiControl(null, false, gameOptions.getKeyDown());
-        shootControl = new UiControl(null, false, gameOptions.getKeyShoot());
+        moveLeftControl = new UiControl(gameOptions.getKeyLeft());
+        moveRightControl = new UiControl(gameOptions.getKeyRight());
+        jumpControl = new UiControl(gameOptions.getKeyUp());
+        crouchControl = new UiControl(gameOptions.getKeyDown());
+        shootControl = new UiControl(gameOptions.getKeyShoot());
 
+        List<UiControl> controls = new ArrayList<>();
         controls.add(moveLeftControl);
         controls.add(moveRightControl);
         controls.add(jumpControl);
         controls.add(crouchControl);
         controls.add(shootControl);
+        application.getInputManager().addControls(controls);
     }
 
     @Override

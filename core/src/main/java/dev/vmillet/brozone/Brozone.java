@@ -34,7 +34,7 @@ public class Brozone extends Game {
 		gameManager = new GameManager(this);
 
 		inputManager = new InputManager();
-		inputManager.setScreen(gameManager.getScreens().getMainMenuScreen());
+		setScreen(gameManager.getScreens().getMainMenuScreen());
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class Brozone extends Game {
 	public void play() {
 		logger.debug("Calling GameManager to start a game");
 		// MVP handle new game
-		gameManager.startGame();
+		gameManager.startGame(this);
 	}
 
 	public void finishGame() {
