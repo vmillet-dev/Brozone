@@ -1,3 +1,22 @@
+apply plugin: "com.android.application"
+
+eclipse.project.name = appName + "-android"
+
+configurations { natives }
+
+dependencies {
+    implementation project(":core")
+
+    implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
+    implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+    natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+
+}
+
 android {
     namespace "dev.vmillet.brozone"
     defaultConfig {
@@ -87,4 +106,6 @@ tasks.register('run', Exec) {
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'dev.vmillet.brozone/dev.vmillet.brozone.AndroidLauncher'
 }
 
-eclipse.project.name = appName + "-android"
+sonar {
+    skipProject true
+}
