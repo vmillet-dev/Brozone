@@ -2,6 +2,8 @@ package dev.vmillet.brozone;
 
 
 import com.badlogic.gdx.Input;
+import dev.vmillet.brozone.input.mapping.CustomControllerMapping;
+import dev.vmillet.brozone.input.mapping.CustomKeyboardMapping;
 
 /**
  * Centralize all config needed by the app such as key binding, display settings, audio settings
@@ -27,6 +29,7 @@ public class GameOptions {
         public ControlType controlType = ControlType.CONTROLLER;
 
     CustomControllerMapping customControllerMapping;
+    CustomKeyboardMapping customKeyboardMapping;
 
     // MVP handle AZERTY / QWERTY keyboard
     // MVP remove this hardcoded init
@@ -36,16 +39,27 @@ public class GameOptions {
     private String keyCrouchName = "S";
     private String keyShootName = "Space";
 
-    public static final int BUTTON_JUMP = 0;
-    public static final int BUTTON_CROUCH = 1;
-    public static final int BUTTON_SHOOT = 2;
-    public static final int AXIS_HORIZONTAL = 3;
-    public static final int AXIS_VERTICAL = 4;
-    public static final int BUTTON_START = 5;
-    public static final int BUTTON_CANCEL = 6;
+    // Commons
+    public static final int ACTION_JUMP = 0;
+    public static final int ACTION_CROUCH = 1;
+    public static final int ACTION_SHOOT = 2;
+    public static final int ACTION_RELOAD = 3;
+    public static final int ACTION_SWITCH_EQUIPMENT = 3;
+    public static final int ACTION_PAUSE_GAME = 4;
+
+    // Keyboard
+    public static final int ACTION_MOVE_LEFT = 10;
+    public static final int ACTION_MOVE_RIGHT = 11;
+    public static final int ACTION_MOVE_UP = 12;
+    public static final int ACTION_MOVE_DOWN = 13;
+
+    // Controller
+    public static final int AXIS_HORIZONTAL = 20;
+    public static final int AXIS_VERTICAL = 21;
 
     public GameOptions() {
         customControllerMapping = new CustomControllerMapping();
+        customKeyboardMapping = new CustomKeyboardMapping();
     }
     public void load() {
         // to implement

@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.controls;
+package dev.vmillet.brozone.control;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
@@ -6,7 +6,7 @@ import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.InputControllerHandler;
+import dev.vmillet.brozone.input.handler.InputControllerHandler;
 import dev.vmillet.brozone.ui.UiControl;
 
 import java.util.ArrayList;
@@ -38,9 +38,9 @@ public class ControllerActorControl implements ActorControl {
 
         leftControl = new UiControl(GameOptions.AXIS_HORIZONTAL, true);
         rightControl = new UiControl(GameOptions.AXIS_HORIZONTAL, false);
-        jumpControl = new UiControl(GameOptions.BUTTON_JUMP);
-        crouchControl = new UiControl(GameOptions.BUTTON_CROUCH);
-        shootControl = new UiControl(GameOptions.BUTTON_SHOOT);
+        jumpControl = new UiControl(GameOptions.ACTION_JUMP);
+        crouchControl = new UiControl(GameOptions.ACTION_CROUCH);
+        shootControl = new UiControl(GameOptions.ACTION_PAUSE_GAME);
 
         List<UiControl> controls = new ArrayList<>();
         controls.add(leftControl);

@@ -1,9 +1,8 @@
-package dev.vmillet.brozone.ui.screens;
+package dev.vmillet.brozone.ui.screen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.ScreenUtils;
 import dev.vmillet.brozone.Brozone;
-import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
 import dev.vmillet.brozone.ui.GenericScreen;

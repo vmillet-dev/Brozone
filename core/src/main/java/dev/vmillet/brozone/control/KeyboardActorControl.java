@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.controls;
+package dev.vmillet.brozone.control;
 
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;

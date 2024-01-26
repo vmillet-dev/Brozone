@@ -1,7 +1,7 @@
-package dev.vmillet.brozone.input.actor;
+package dev.vmillet.brozone.input;
 
 import dev.vmillet.brozone.Brozone;
-import dev.vmillet.brozone.controls.ActorControl;
+import dev.vmillet.brozone.control.ActorControl;
 
 public class PlayerActorInput implements ActorInput {
     private final ActorControl uiControl;

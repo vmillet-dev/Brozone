@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.input;
+package dev.vmillet.brozone.input.handler;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -6,14 +6,14 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.managers.InputManager;
+import dev.vmillet.brozone.manager.InputManager;
 
-public class InputHandler implements InputProcessor, GestureDetector.GestureListener {
-    private static final GdxLogger logger = GdxLoggerFactory.getLogger(InputHandler.class);
+public class InputKeyboardHandler implements InputProcessor, GestureDetector.GestureListener {
+    private static final GdxLogger logger = GdxLoggerFactory.getLogger(InputKeyboardHandler.class);
 
     private final InputManager inputManager;
 
-    public InputHandler(InputManager inputMan) {
+    public InputKeyboardHandler(InputManager inputMan) {
         inputManager = inputMan;
     }
 

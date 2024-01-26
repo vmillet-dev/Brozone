@@ -1,6 +1,6 @@
 package dev.vmillet.brozone.game;
 
-import dev.vmillet.brozone.managers.GameManager;
+import dev.vmillet.brozone.manager.GameManager;
 
 /**
  * Each entity that should be rendered and computed must implement this interface and
