@@ -20,16 +20,23 @@ public class InputKeyboardHandler extends MappedKeyboardAdapter {
     @Override
     public boolean configuredKeyDown(int keycode) {
         logger.debug("key down: " + Input.Keys.toString(keycode));
-        inputManager.maybeFlashPressed(keycode);
+        inputManager.inputPressed(keycode);
         return false;
     }
 
     @Override
-    public boolean configuredTouchDown(int screenX, int screenY, int pointer, int button) {
-        logger.debug("touch down");
-        inputManager.maybeFlashPressed(screenX, screenY);
+    public boolean configuredKeyUp(int keycode) {
+        logger.debug("key down: " + Input.Keys.toString(keycode));
+        inputManager.inputReleased(keycode);
         return false;
     }
+
+//    @Override
+//    public boolean configuredTouchDown(int screenX, int screenY, int pointer, int button) {
+//        logger.debug("touch down");
+//        inputManager.maybeFlashPressed(screenX, screenY);
+//        return false;
+//    }
 
 
     @Override

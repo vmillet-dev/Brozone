@@ -40,7 +40,7 @@ public class ControllerActorControl implements ActorControl {
         rightControl = new UiControl(GameOptions.AXIS_HORIZONTAL, false);
         jumpControl = new UiControl(GameOptions.ACTION_JUMP);
         crouchControl = new UiControl(GameOptions.ACTION_CROUCH);
-        shootControl = new UiControl(GameOptions.ACTION_PAUSE_GAME);
+        shootControl = new UiControl(GameOptions.ACTION_SHOOT);
 
         List<UiControl> controls = new ArrayList<>();
         controls.add(leftControl);

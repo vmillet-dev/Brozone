@@ -20,17 +20,22 @@ public class MappedKeyboardAdapter implements InputProcessor {
         return false;
     }
 
+    public boolean configuredKeyUp(int keycode) {
+        return false;
+    }
+
+
     public boolean configuredTouchDown(int screenX, int screenY, int pointer, int button) {
         return false;
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        logger.debug("key down: " + Input.Keys.toString(keycode));
 
         ConfiguredInput configuredInput = mapping.getConfiguredFromKey(keycode);
-        logger.info("key code: " + keycode);
         if (configuredInput != null) {
-            logger.info("input id: " + configuredInput.inputId);
+            logger.debug("input id: " + configuredInput.inputId);
         }
         return configuredInput != null && configuredKeyDown(configuredInput.inputId);
     }
@@ -38,11 +43,16 @@ public class MappedKeyboardAdapter implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         logger.debug("key up: " + Input.Keys.toString(keycode));
-        return false;
+        ConfiguredInput configuredInput = mapping.getConfiguredFromKey(keycode);
+        if (configuredInput != null) {
+            logger.info("input id: " + configuredInput.inputId);
+        }
+        return configuredInput != null && configuredKeyUp(configuredInput.inputId);
     }
 
     @Override
     public boolean keyTyped(char character) {
+        logger.debug("key typed: " + character);
         return false;
     }
 

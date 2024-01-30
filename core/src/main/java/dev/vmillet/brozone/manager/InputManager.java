@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.mapping.handler.InputKeyboardHandler;
 import dev.vmillet.brozone.ui.UiControl;
 
 import java.util.ArrayList;
@@ -45,33 +44,15 @@ public class InputManager {
         }
     }
 
-    public void maybeFlashPressed(int keyCode) {
+    public void inputPressed(int buttonId) {
         for (UiControl control : controls) {
-            if(control.maybeFlashPressed(keyCode)) {
-                return;
-            }
+            control.inputPressed(buttonId);
         }
     }
 
-    public void maybeFlashPressed(int x, int y) {
-        lastTouchDragPosition.set(x, y);
-        setPointerPosition(flashInputPointer, x, y);
+    public void inputReleased(int buttonId) {
         for (UiControl control : controls) {
-            if (control.maybeFlashPressed(flashInputPointer)) {
-                return;
-            }
-        }
-    }
-
-    public void buttonControllerPressed(int buttonId) {
-        for (UiControl control : controls) {
-            control.buttonControllerPressed(buttonId);
-        }
-    }
-
-    public void buttonControllerReleased(int buttonId) {
-        for (UiControl control : controls) {
-            control.buttonControllerReleased(buttonId);
+            control.inputReleased(buttonId);
         }
     }
 

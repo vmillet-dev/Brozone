@@ -20,14 +20,14 @@ public class InputControllerHandler extends MappedControllerAdapter {
     @Override
     public boolean configuredButtonDown(Controller controller, int buttonId) {
         logger.debug("button pressed: " + buttonId);
-        inputManager.buttonControllerPressed(buttonId);
+        inputManager.inputPressed(buttonId);
         return false;
     }
 
     @Override
     public boolean configuredButtonUp(Controller controller, int buttonId) {
         logger.debug("button released: " + buttonId);
-        inputManager.buttonControllerReleased(buttonId);
+        inputManager.inputReleased(buttonId);
         return false;
     }
 
