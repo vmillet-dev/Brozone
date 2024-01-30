@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.handler.InputKeyboardHandler;
+import dev.vmillet.brozone.input.mapping.handler.InputKeyboardHandler;
 import dev.vmillet.brozone.ui.UiControl;
 
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ public class InputManager {
 
     public InputManager() {
         logger.debug("creating input manager");
-        Gdx.input.setInputProcessor(new InputKeyboardHandler(this));
 
         flashInputPointer = new InputPointer();
         lastTouchDragPosition = new Vector2();

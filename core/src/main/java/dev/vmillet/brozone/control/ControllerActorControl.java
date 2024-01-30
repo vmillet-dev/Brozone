@@ -6,7 +6,7 @@ import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.handler.InputControllerHandler;
+import dev.vmillet.brozone.input.mapping.handler.InputControllerHandler;
 import dev.vmillet.brozone.ui.UiControl;
 
 import java.util.ArrayList;

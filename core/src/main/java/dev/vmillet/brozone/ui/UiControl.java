@@ -1,7 +1,6 @@
 package dev.vmillet.brozone.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
@@ -65,8 +64,10 @@ public class UiControl {
     }
 
     public boolean maybeFlashPressed(int keyCode) {
-        logger.debug("key pressed: " + Input.Keys.toString(keyCode));
-        logger.debug("key defined in control: " + Input.Keys.toString(inputId));
+
+
+        logger.debug("input id: " + keyCode);
+        logger.debug("input id defined in control: " + inputId);
         logger.debug("isKeyFlashed: " + isKeyFlashed);
         logger.debug("isKeyPressed: " + isKeyPressed);
 

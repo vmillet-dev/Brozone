@@ -1,10 +1,10 @@
-package dev.vmillet.brozone.input.handler;
+package dev.vmillet.brozone.input.mapping.handler;
 
 import com.badlogic.gdx.controllers.Controller;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.mapping.controller.ControllerMappings;
-import dev.vmillet.brozone.input.mapping.controller.MappedControllerAdapter;
+import dev.vmillet.brozone.input.mapping.ControllerMappings;
+import dev.vmillet.brozone.input.mapping.adapter.MappedControllerAdapter;
 import dev.vmillet.brozone.manager.InputManager;
 
 public class InputControllerHandler extends MappedControllerAdapter {

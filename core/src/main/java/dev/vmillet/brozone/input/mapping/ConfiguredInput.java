@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.input.mapping.controller;
+package dev.vmillet.brozone.input.mapping;
 
 /**
  * Input type definition

@@ -1,9 +1,9 @@
-package dev.vmillet.brozone.input.mapping;
+package dev.vmillet.brozone.input.mapping.config;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerMapping;
-import dev.vmillet.brozone.input.mapping.controller.ConfiguredInput;
-import dev.vmillet.brozone.input.mapping.controller.ControllerMappings;
+import dev.vmillet.brozone.input.mapping.ConfiguredInput;
+import dev.vmillet.brozone.input.mapping.ControllerMappings;
 
 import static dev.vmillet.brozone.GameOptions.ACTION_PAUSE_GAME;
 import static dev.vmillet.brozone.GameOptions.ACTION_RELOAD;
