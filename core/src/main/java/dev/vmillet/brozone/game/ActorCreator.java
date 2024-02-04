@@ -4,12 +4,12 @@ import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.controls.ControllerActorControl;
-import dev.vmillet.brozone.controls.KeyboardActorControl;
-import dev.vmillet.brozone.input.actor.ActorInput;
-import dev.vmillet.brozone.input.actor.NpcActorInput;
-import dev.vmillet.brozone.input.actor.PlayerActorInput;
-import dev.vmillet.brozone.managers.GameManager;
+import dev.vmillet.brozone.control.ControllerActorControl;
+import dev.vmillet.brozone.control.KeyboardActorControl;
+import dev.vmillet.brozone.input.ActorInput;
+import dev.vmillet.brozone.input.NpcActorInput;
+import dev.vmillet.brozone.input.PlayerActorInput;
+import dev.vmillet.brozone.manager.GameManager;
 
 /**
  * Build an actor with specific properties and attach input to get npc or player characters

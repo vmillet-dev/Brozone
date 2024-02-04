@@ -1,8 +1,10 @@
-package dev.vmillet.brozone.input.mapping.controller;
+package dev.vmillet.brozone.input.mapping;
 
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.JsonValue;
+import dev.vmillet.brozone.GameOptions;
+import dev.vmillet.brozone.input.mapping.adapter.MappedControllerAdapter;
 
 import java.util.HashMap;
 
@@ -115,18 +117,9 @@ public class ControllerMappings {
         return true;
     }
 
-    protected MappedInputs getControllerMapping(Controller controller) {
-        if (!initialized)
-            throw new IllegalStateException("Call commitConfig() before creating Controller Listeners");
-
-        MappedInputs retVal = null;
-
-        // initialize mapping map and controller information if not already present
-        if (mappedInputs == null)
-            mappedInputs = new HashMap<>();
-
-
-        retVal = mappedInputs.get(controller.getName());
+    public MappedInputs getControllerMapping(Controller controller) {
+        initMappedInputs();
+        MappedInputs retVal = mappedInputs.get(controller.getName());
 
         // in case the controller is not recorded or loaded already, initialize it
         if (retVal == null) {
@@ -140,6 +133,31 @@ public class ControllerMappings {
         return retVal;
     }
 
+    public MappedInputs getKeyboardMapping() {
+        initMappedInputs();
+        MappedInputs retVal = mappedInputs.get(GameOptions.ControlType.KEYBOARD.getHumanName());
+
+        // in case the controller is not recorded or loaded already, initialize it
+        if (retVal == null) {
+            MappedInputs defaultMapping = new MappedInputs(GameOptions.ControlType.KEYBOARD.getHumanName());
+            if (getDefaultMapping(defaultMapping)) {
+                retVal = defaultMapping;
+                mappedInputs.put(retVal.controllerName, retVal);
+            }
+        }
+
+        return retVal;
+    }
+
+    private void initMappedInputs() {
+        if (!initialized)
+            throw new IllegalStateException("Call commitConfig() before creating Controller Listeners");
+
+        // initialize mapping map and controller information if not already present
+        if (mappedInputs == null)
+            mappedInputs = new HashMap<>();
+    }
+
     /**
      * use this method to define a default mapping for your controllers.
      * <p>
@@ -150,6 +168,11 @@ public class ControllerMappings {
      * @return true if default mappings were defined and should be used
      */
     public boolean getDefaultMapping(MappedInputs defaultMapping, Controller controller) {
+        //nothing - just override it for your desires
+        return false;
+    }
+
+    public boolean getDefaultMapping(MappedInputs defaultMapping) {
         //nothing - just override it for your desires
         return false;
     }
@@ -173,14 +196,6 @@ public class ControllerMappings {
         initialized = true;
     }
 
-    /**
-     * resets mapping for the given controller. Warning: already instantiated {@link MappedController} will still hold
-     * a reference to the old mapping, so be sure to refresh such references with its
-     * {@link MappedController#refreshMappingCache()}.
-     * {@link MappedControllerAdapter} is not concerned.
-     *
-     * @param controller
-     */
     public void resetMappings(Controller controller) {
         if (mappedInputs == null)
             return;
@@ -324,6 +339,13 @@ public class ControllerMappings {
         }
     }
 
+    public static class ControllerKey extends ControllerInput {
+        public int keyIndex;
+
+        public ControllerKey(int axisIndex) {
+            this.keyIndex = axisIndex;
+        }
+    }
     /**
      * A single input mapping definition for one ConfiguredInput and one Controller
      */
@@ -387,10 +409,11 @@ public class ControllerMappings {
      * Input mappings for a single controller. Class is protected and not for accessing from outside.
      * Mappings are constructed via {@link #recordMapping(Controller, int)}
      */
-    protected class MappedInputs {
+    public class MappedInputs {
         public boolean isRecorded;
         private String controllerName;
         private final HashMap<Integer, MappedInput> mappingsByConfigured;
+        private final HashMap<Integer, MappedInput> mappingsByKey;
         private final HashMap<Integer, MappedInput> mappingsByButton;
         private final HashMap<Integer, MappedInput> mappingsByAxis;
         private final HashMap<Integer, MappedInput> mappingsByPov;
@@ -402,6 +425,7 @@ public class ControllerMappings {
         private MappedInputs(String controllerName) {
             this.controllerName = controllerName;
             mappingsByConfigured = new HashMap<>(mappedInputs.size());
+            mappingsByKey = new HashMap<>(mappedInputs.size());
             mappingsByButton = new HashMap<>(mappedInputs.size());
             mappingsByAxis = new HashMap<>(mappedInputs.size());
             mappingsByPov = new HashMap<>(2);
@@ -429,7 +453,13 @@ public class ControllerMappings {
             if (mappingsByConfigured.containsKey(mapping.configuredInputId))
                 return false;
 
-            if (mapping.controllerInput instanceof ControllerButton) {
+            if (mapping.controllerInput instanceof ControllerKey) {
+                ControllerKey controllerKey = (ControllerKey) mapping.controllerInput;
+                if(mappingsByKey.containsKey(controllerKey.keyIndex)) {
+                    return false;
+                }
+                mappingsByKey.put(controllerKey.keyIndex, mapping);
+            } else if (mapping.controllerInput instanceof ControllerButton) {
                 ControllerButton controllerButton = (ControllerButton) mapping.controllerInput;
                 if (mappingsByButton.containsKey(controllerButton.buttonIndex))
                     return false;
@@ -515,6 +545,12 @@ public class ControllerMappings {
                 return configuredInputs.get(mappedInput.configuredInputId);
             else
                 return null;
+        }
+
+        public ConfiguredInput getConfiguredFromKey(int buttonIndex) {
+            MappedInput mappedInput = mappingsByKey.get(buttonIndex);
+
+            return mappedInput != null ? configuredInputs.get(mappedInput.configuredInputId) : null;
         }
 
         /**

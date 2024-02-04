@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.input.actor;
+package dev.vmillet.brozone.input;
 
 import dev.vmillet.brozone.Brozone;
 

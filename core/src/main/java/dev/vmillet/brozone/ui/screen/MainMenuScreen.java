@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.ui.screens;
+package dev.vmillet.brozone.ui.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ScreenUtils;

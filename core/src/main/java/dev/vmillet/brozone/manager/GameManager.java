@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.managers;
+package dev.vmillet.brozone.manager;
 
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;

@@ -1,9 +1,11 @@
-package dev.vmillet.brozone.controls;
+package dev.vmillet.brozone.control;
 
+import com.badlogic.gdx.Gdx;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GameOptions;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
+import dev.vmillet.brozone.input.mapping.handler.InputKeyboardHandler;
 import dev.vmillet.brozone.ui.UiControl;
 
 import java.util.ArrayList;
@@ -22,12 +24,13 @@ public class KeyboardActorControl implements ActorControl {
         logger.debug("create keyboard control");
 
         GameOptions gameOptions = application.getOptions();
+        Gdx.input.setInputProcessor(new InputKeyboardHandler(gameOptions.getCustomKeyboardMapping(), application.getInputManager()));
 
-        moveLeftControl = new UiControl(gameOptions.getKeyLeft());
-        moveRightControl = new UiControl(gameOptions.getKeyRight());
-        jumpControl = new UiControl(gameOptions.getKeyUp());
-        crouchControl = new UiControl(gameOptions.getKeyDown());
-        shootControl = new UiControl(gameOptions.getKeyShoot());
+        moveLeftControl = new UiControl(GameOptions.ACTION_MOVE_LEFT);
+        moveRightControl = new UiControl(GameOptions.ACTION_MOVE_RIGHT);
+        jumpControl = new UiControl(GameOptions.ACTION_JUMP);
+        crouchControl = new UiControl(GameOptions.ACTION_CROUCH);
+        shootControl = new UiControl(GameOptions.ACTION_SHOOT);
 
         List<UiControl> controls = new ArrayList<>();
         controls.add(moveLeftControl);

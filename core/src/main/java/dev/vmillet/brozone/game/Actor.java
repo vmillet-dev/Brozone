@@ -2,8 +2,8 @@ package dev.vmillet.brozone.game;
 
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.actor.ActorInput;
-import dev.vmillet.brozone.managers.GameManager;
+import dev.vmillet.brozone.input.ActorInput;
+import dev.vmillet.brozone.manager.GameManager;
 
 /**
  *

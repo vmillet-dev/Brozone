@@ -1,11 +1,11 @@
-package dev.vmillet.brozone.input;
+package dev.vmillet.brozone.input.mapping.handler;
 
 import com.badlogic.gdx.controllers.Controller;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.mapping.controller.ControllerMappings;
-import dev.vmillet.brozone.input.mapping.controller.MappedControllerAdapter;
-import dev.vmillet.brozone.managers.InputManager;
+import dev.vmillet.brozone.input.mapping.ControllerMappings;
+import dev.vmillet.brozone.input.mapping.adapter.MappedControllerAdapter;
+import dev.vmillet.brozone.manager.InputManager;
 
 public class InputControllerHandler extends MappedControllerAdapter {
     private static final GdxLogger logger = GdxLoggerFactory.getLogger(InputControllerHandler.class);
@@ -20,14 +20,14 @@ public class InputControllerHandler extends MappedControllerAdapter {
     @Override
     public boolean configuredButtonDown(Controller controller, int buttonId) {
         logger.debug("button pressed: " + buttonId);
-        inputManager.buttonControllerPressed(buttonId);
+        inputManager.inputPressed(buttonId);
         return false;
     }
 
     @Override
     public boolean configuredButtonUp(Controller controller, int buttonId) {
         logger.debug("button released: " + buttonId);
-        inputManager.buttonControllerReleased(buttonId);
+        inputManager.inputReleased(buttonId);
         return false;
     }
 

@@ -1,11 +1,10 @@
-package dev.vmillet.brozone.managers;
+package dev.vmillet.brozone.manager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.input.InputHandler;
 import dev.vmillet.brozone.ui.UiControl;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ public class InputManager {
 
     public InputManager() {
         logger.debug("creating input manager");
-        Gdx.input.setInputProcessor(new InputHandler(this));
 
         flashInputPointer = new InputPointer();
         lastTouchDragPosition = new Vector2();
@@ -46,33 +44,15 @@ public class InputManager {
         }
     }
 
-    public void maybeFlashPressed(int keyCode) {
+    public void inputPressed(int buttonId) {
         for (UiControl control : controls) {
-            if(control.maybeFlashPressed(keyCode)) {
-                return;
-            }
+            control.inputPressed(buttonId);
         }
     }
 
-    public void maybeFlashPressed(int x, int y) {
-        lastTouchDragPosition.set(x, y);
-        setPointerPosition(flashInputPointer, x, y);
+    public void inputReleased(int buttonId) {
         for (UiControl control : controls) {
-            if (control.maybeFlashPressed(flashInputPointer)) {
-                return;
-            }
-        }
-    }
-
-    public void buttonControllerPressed(int buttonId) {
-        for (UiControl control : controls) {
-            control.buttonControllerPressed(buttonId);
-        }
-    }
-
-    public void buttonControllerReleased(int buttonId) {
-        for (UiControl control : controls) {
-            control.buttonControllerReleased(buttonId);
+            control.inputReleased(buttonId);
         }
     }
 

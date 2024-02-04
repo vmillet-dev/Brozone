@@ -3,9 +3,9 @@ package dev.vmillet.brozone.ui;
 import dev.vmillet.brozone.Brozone;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
-import dev.vmillet.brozone.ui.screens.GameScreen;
-import dev.vmillet.brozone.ui.screens.LoadingScreen;
-import dev.vmillet.brozone.ui.screens.MainMenuScreen;
+import dev.vmillet.brozone.ui.screen.GameScreen;
+import dev.vmillet.brozone.ui.screen.LoadingScreen;
+import dev.vmillet.brozone.ui.screen.MainMenuScreen;
 
 /**
  * Create and add a reference to all screens of the app

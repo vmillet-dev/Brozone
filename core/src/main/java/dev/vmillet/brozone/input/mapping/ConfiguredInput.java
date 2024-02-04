@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.input.mapping.controller;
+package dev.vmillet.brozone.input.mapping;
 
 /**
  * Input type definition
@@ -34,6 +34,7 @@ public class ConfiguredInput {
          * an analog axis, dpad or normal buttons for this. If an analog axis is used, a treshold value of default
          * 0.5 is 0 and of &gt; 0.8 is 1. Between old value is used.
          */
-        axisDigital
+        axisDigital,
+        key
     }
 }

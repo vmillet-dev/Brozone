@@ -1,4 +1,4 @@
-package dev.vmillet.brozone.ui.screens;
+package dev.vmillet.brozone.ui.screen;
 
 import com.badlogic.gdx.graphics.Color;
 import dev.vmillet.brozone.Brozone;

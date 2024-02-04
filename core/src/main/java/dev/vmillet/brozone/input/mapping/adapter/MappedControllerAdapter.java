@@ -1,8 +1,10 @@
-package dev.vmillet.brozone.input.mapping.controller;
+package dev.vmillet.brozone.input.mapping.adapter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
+import dev.vmillet.brozone.input.mapping.ConfiguredInput;
+import dev.vmillet.brozone.input.mapping.ControllerMappings;
 
 /**
  * This ControllerAdapter respects the mapping you instantiate it with.
