@@ -26,8 +26,8 @@ public class MainMenuScreen extends GenericScreen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
-        camera.update();
-        application.batch.setProjectionMatrix(camera.combined);
+        gameCamera.getCamera().update();
+        application.batch.setProjectionMatrix(gameCamera.getCamera().combined);
 
         application.batch.begin();
         application.font.draw(application.batch, "Welcome to Drop!!! ", 100, 150);
@@ -35,14 +35,14 @@ public class MainMenuScreen extends GenericScreen {
         application.batch.end();
 
         if (Gdx.input.isTouched()) {
-            application.setScreen(application.getGameManager().getScreens().getLoadingScreen());
+            application.setScreen(new LoadingScreen(application));
             dispose();
         }
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        gameCamera.getViewport().update(width, height);
     }
 
     @Override

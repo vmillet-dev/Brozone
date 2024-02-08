@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import dev.vmillet.brozone.Brozone;
+import dev.vmillet.brozone.GameCamera;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +15,12 @@ import java.util.List;
  */
 public abstract class GenericScreen implements Screen  {
     protected final Brozone application;
-    protected final Viewport viewport;
-    protected final OrthographicCamera camera;
+    protected final GameCamera gameCamera;
 
-    protected List<UiControl> screenControl = new ArrayList<>();
 
     protected GenericScreen(Brozone application) {
         this.application = application;
-
-        camera = new OrthographicCamera();
-        viewport = new ExtendViewport(800, 480, camera);
+        this.gameCamera = application.getGameManager().getGameCamera();
     }
 
     public Brozone getApplication() { return application; }

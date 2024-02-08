@@ -1,20 +1,24 @@
-package dev.vmillet.brozone.game;
+package dev.vmillet.brozone.game.character;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import dev.vmillet.brozone.GdxLogger;
 import dev.vmillet.brozone.GdxLoggerFactory;
+import dev.vmillet.brozone.game.GameObject;
 import dev.vmillet.brozone.input.ActorInput;
 import dev.vmillet.brozone.manager.GameManager;
 
 /**
  *
  */
-public class Actor implements GameObject {
-    private static final GdxLogger logger = GdxLoggerFactory.getLogger(Actor.class);
+public class Character implements GameObject {
+    private static final GdxLogger logger = GdxLoggerFactory.getLogger(Character.class);
 
     private final ActorInput actorInput;
+    private final Body body;
 
-    Actor(ActorInput actorInput) {
+    public Character(ActorInput actorInput, Body body) {
         this.actorInput = actorInput;
+        this.body = body;
     }
     // MVP add properties like life, xp, guns
     // MVP Add drawable and handling physics with Box2D plugin

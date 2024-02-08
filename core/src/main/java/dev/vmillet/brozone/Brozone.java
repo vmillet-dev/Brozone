@@ -3,8 +3,10 @@ package dev.vmillet.brozone;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import dev.vmillet.brozone.manager.InputManager;
 import dev.vmillet.brozone.manager.GameManager;
+import dev.vmillet.brozone.ui.screen.MainMenuScreen;
 
 import static dev.vmillet.brozone.GdxLogger.setDebugLevelMode;
 
@@ -27,6 +29,7 @@ public class Brozone extends Game {
 		setDebugLevelMode();
 
 		logger.debug("Creating application");
+		Box2D.init();
 
 		batch = new SpriteBatch();
 		font = new BitmapFont();
@@ -34,7 +37,7 @@ public class Brozone extends Game {
 		gameManager = new GameManager(this);
 
 		inputManager = new InputManager();
-		setScreen(gameManager.getScreens().getMainMenuScreen());
+		setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
@@ -42,6 +45,7 @@ public class Brozone extends Game {
 		super.render();
 		inputManager.update(this);
 		gameManager.update();
+		draw();
 		// MVP maybe must add a drawing manager to draw all objects only once
 	}
 

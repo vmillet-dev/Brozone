@@ -24,15 +24,15 @@ public class LoadingScreen extends GenericScreen {
     public void render(float delta) {
         clear(Color.DARK_GRAY);
         // MVP load before or after main menu ?
-        camera.update();
+        gameCamera.getCamera().update();
         application.play();
-        application.setScreen(application.getGameManager().getScreens().getGameScreen());
+        application.setScreen(new GameScreen(application));
         dispose();
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        gameCamera.getViewport().update(width, height);
     }
 
     @Override
